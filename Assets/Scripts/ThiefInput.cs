@@ -117,6 +117,15 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""64069d41-f0ce-4456-acb3-0225449688a9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,17 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f94cfe68-0003-4d0c-8820-b53c053f9671"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -163,6 +183,7 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
         m_Move_MoveRight = m_Move.FindAction("MoveRight", throwIfNotFound: true);
         m_Move_MoveLeft = m_Move.FindAction("MoveLeft", throwIfNotFound: true);
         m_Move_Jump = m_Move.FindAction("Jump", throwIfNotFound: true);
+        m_Move_Dash = m_Move.FindAction("Dash", throwIfNotFound: true);
     }
 
     ~@ThiefInput()
@@ -246,6 +267,7 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Move_MoveRight;
     private readonly InputAction m_Move_MoveLeft;
     private readonly InputAction m_Move_Jump;
+    private readonly InputAction m_Move_Dash;
     /// <summary>
     /// Provides access to input actions defined in input action map "Move".
     /// </summary>
@@ -269,6 +291,10 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Move/Jump".
         /// </summary>
         public InputAction @Jump => m_Wrapper.m_Move_Jump;
+        /// <summary>
+        /// Provides access to the underlying input action "Move/Dash".
+        /// </summary>
+        public InputAction @Dash => m_Wrapper.m_Move_Dash;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -304,6 +330,9 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
         }
 
         /// <summary>
@@ -324,6 +353,9 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
         }
 
         /// <summary>
@@ -385,5 +417,12 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJump(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Dash" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDash(InputAction.CallbackContext context);
     }
 }

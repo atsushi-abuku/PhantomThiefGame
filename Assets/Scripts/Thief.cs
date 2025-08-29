@@ -12,7 +12,7 @@ public class Thief : MonoBehaviour
 
     private float moveDirection = 0f;
     public float moveSpeed = 3f;
-    public float jumpPower = 5f;
+    public float jumpPower = 5;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -34,6 +34,9 @@ public class Thief : MonoBehaviour
         {
             if (moveDirection == -1f) moveDirection = 0f;
         };
+        //Shiftでダッシュ
+        thiefInput.Move.Dash.performed += ctx => moveSpeed = 6f;
+        thiefInput.Move.Dash.canceled += ctx => moveSpeed = 3f;
          //ジャンプ
          thiefInput.Move.Jump.started += Jump;
          thiefInput.Enable();
@@ -47,7 +50,7 @@ public class Thief : MonoBehaviour
          rigidBody.linearVelocity = velocity;
      }
     
-    //Shiftでジャンプ(1段)
+    //Spaceでジャンプ(1段)
     void Jump(InputAction.CallbackContext context)
     {
         if (jumpCount < maxJumpCount) 
