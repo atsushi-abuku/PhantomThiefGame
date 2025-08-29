@@ -93,12 +93,39 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""MoveRight"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""b72c014a-ed30-4e72-b3d3-e02660e4d6b3"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""dedfbcea-c066-40d9-a934-1e87c834e0bc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""0fa1be22-97e5-4ca7-900b-a0f783ddea70"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""64069d41-f0ce-4456-acb3-0225449688a9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -112,32 +139,37 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
                     ""action"": ""MoveRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""New action map1"",
-            ""id"": ""b3d9b194-fa49-4262-8781-70ea3d5f2089"",
-            ""actions"": [
-                {
-                    ""name"": ""New action"",
-                    ""type"": ""Button"",
-                    ""id"": ""6c2dc2a6-ed37-4ac1-9520-38c63c5552b6"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""24229bcb-4465-48d8-9a9d-16f5ce41789c"",
-                    ""path"": """",
+                    ""id"": ""13e7e179-30d4-4e45-87f4-43d03bae6f89"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""MoveLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""58a2107c-b158-4a3b-93d2-545a28e41e35"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f94cfe68-0003-4d0c-8820-b53c053f9671"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -149,15 +181,14 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
         // Move
         m_Move = asset.FindActionMap("Move", throwIfNotFound: true);
         m_Move_MoveRight = m_Move.FindAction("MoveRight", throwIfNotFound: true);
-        // New action map1
-        m_Newactionmap1 = asset.FindActionMap("New action map1", throwIfNotFound: true);
-        m_Newactionmap1_Newaction = m_Newactionmap1.FindAction("New action", throwIfNotFound: true);
+        m_Move_MoveLeft = m_Move.FindAction("MoveLeft", throwIfNotFound: true);
+        m_Move_Jump = m_Move.FindAction("Jump", throwIfNotFound: true);
+        m_Move_Dash = m_Move.FindAction("Dash", throwIfNotFound: true);
     }
 
     ~@ThiefInput()
     {
         UnityEngine.Debug.Assert(!m_Move.enabled, "This will cause a leak and performance issues, ThiefInput.Move.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_Newactionmap1.enabled, "This will cause a leak and performance issues, ThiefInput.Newactionmap1.Disable() has not been called.");
     }
 
     /// <summary>
@@ -234,6 +265,9 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Move;
     private List<IMoveActions> m_MoveActionsCallbackInterfaces = new List<IMoveActions>();
     private readonly InputAction m_Move_MoveRight;
+    private readonly InputAction m_Move_MoveLeft;
+    private readonly InputAction m_Move_Jump;
+    private readonly InputAction m_Move_Dash;
     /// <summary>
     /// Provides access to input actions defined in input action map "Move".
     /// </summary>
@@ -249,6 +283,18 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Move/MoveRight".
         /// </summary>
         public InputAction @MoveRight => m_Wrapper.m_Move_MoveRight;
+        /// <summary>
+        /// Provides access to the underlying input action "Move/MoveLeft".
+        /// </summary>
+        public InputAction @MoveLeft => m_Wrapper.m_Move_MoveLeft;
+        /// <summary>
+        /// Provides access to the underlying input action "Move/Jump".
+        /// </summary>
+        public InputAction @Jump => m_Wrapper.m_Move_Jump;
+        /// <summary>
+        /// Provides access to the underlying input action "Move/Dash".
+        /// </summary>
+        public InputAction @Dash => m_Wrapper.m_Move_Dash;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -278,6 +324,15 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
             @MoveRight.started += instance.OnMoveRight;
             @MoveRight.performed += instance.OnMoveRight;
             @MoveRight.canceled += instance.OnMoveRight;
+            @MoveLeft.started += instance.OnMoveLeft;
+            @MoveLeft.performed += instance.OnMoveLeft;
+            @MoveLeft.canceled += instance.OnMoveLeft;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
         }
 
         /// <summary>
@@ -292,6 +347,15 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
             @MoveRight.started -= instance.OnMoveRight;
             @MoveRight.performed -= instance.OnMoveRight;
             @MoveRight.canceled -= instance.OnMoveRight;
+            @MoveLeft.started -= instance.OnMoveLeft;
+            @MoveLeft.performed -= instance.OnMoveLeft;
+            @MoveLeft.canceled -= instance.OnMoveLeft;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
         }
 
         /// <summary>
@@ -325,102 +389,6 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="MoveActions" /> instance referencing this action map.
     /// </summary>
     public MoveActions @Move => new MoveActions(this);
-
-    // New action map1
-    private readonly InputActionMap m_Newactionmap1;
-    private List<INewactionmap1Actions> m_Newactionmap1ActionsCallbackInterfaces = new List<INewactionmap1Actions>();
-    private readonly InputAction m_Newactionmap1_Newaction;
-    /// <summary>
-    /// Provides access to input actions defined in input action map "New action map1".
-    /// </summary>
-    public struct Newactionmap1Actions
-    {
-        private @ThiefInput m_Wrapper;
-
-        /// <summary>
-        /// Construct a new instance of the input action map wrapper class.
-        /// </summary>
-        public Newactionmap1Actions(@ThiefInput wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "Newactionmap1/Newaction".
-        /// </summary>
-        public InputAction @Newaction => m_Wrapper.m_Newactionmap1_Newaction;
-        /// <summary>
-        /// Provides access to the underlying input action map instance.
-        /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Newactionmap1; }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
-        public void Enable() { Get().Enable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
-        public void Disable() { Get().Disable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
-        public bool enabled => Get().enabled;
-        /// <summary>
-        /// Implicitly converts an <see ref="Newactionmap1Actions" /> to an <see ref="InputActionMap" /> instance.
-        /// </summary>
-        public static implicit operator InputActionMap(Newactionmap1Actions set) { return set.Get(); }
-        /// <summary>
-        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <param name="instance">Callback instance.</param>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
-        /// </remarks>
-        /// <seealso cref="Newactionmap1Actions" />
-        public void AddCallbacks(INewactionmap1Actions instance)
-        {
-            if (instance == null || m_Wrapper.m_Newactionmap1ActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_Newactionmap1ActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
-        }
-
-        /// <summary>
-        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <remarks>
-        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
-        /// </remarks>
-        /// <seealso cref="Newactionmap1Actions" />
-        private void UnregisterCallbacks(INewactionmap1Actions instance)
-        {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
-        }
-
-        /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="Newactionmap1Actions.UnregisterCallbacks(INewactionmap1Actions)" />.
-        /// </summary>
-        /// <seealso cref="Newactionmap1Actions.UnregisterCallbacks(INewactionmap1Actions)" />
-        public void RemoveCallbacks(INewactionmap1Actions instance)
-        {
-            if (m_Wrapper.m_Newactionmap1ActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        /// <summary>
-        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
-        /// </summary>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
-        /// </remarks>
-        /// <seealso cref="Newactionmap1Actions.AddCallbacks(INewactionmap1Actions)" />
-        /// <seealso cref="Newactionmap1Actions.RemoveCallbacks(INewactionmap1Actions)" />
-        /// <seealso cref="Newactionmap1Actions.UnregisterCallbacks(INewactionmap1Actions)" />
-        public void SetCallbacks(INewactionmap1Actions instance)
-        {
-            foreach (var item in m_Wrapper.m_Newactionmap1ActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_Newactionmap1ActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    /// <summary>
-    /// Provides a new <see cref="Newactionmap1Actions" /> instance referencing this action map.
-    /// </summary>
-    public Newactionmap1Actions @Newactionmap1 => new Newactionmap1Actions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Move" which allows adding and removing callbacks.
     /// </summary>
@@ -435,20 +403,26 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMoveRight(InputAction.CallbackContext context);
-    }
-    /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "New action map1" which allows adding and removing callbacks.
-    /// </summary>
-    /// <seealso cref="Newactionmap1Actions.AddCallbacks(INewactionmap1Actions)" />
-    /// <seealso cref="Newactionmap1Actions.RemoveCallbacks(INewactionmap1Actions)" />
-    public interface INewactionmap1Actions
-    {
         /// <summary>
-        /// Method invoked when associated input action "New action" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "MoveLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnMoveLeft(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnJump(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Dash" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDash(InputAction.CallbackContext context);
     }
 }

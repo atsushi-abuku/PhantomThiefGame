@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 332541219}
   m_Layer: 0
   m_Name: Thief
-  m_TagString: Untagged
+  m_TagString: Thief
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -289,6 +289,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f3d531e5c08754fa630a2db6a0943c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxJumpCount: 1
+  jumpCount: 0
 --- !u!54 &332541220
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -314,7 +316,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!136 &332541221
 CapsuleCollider:
@@ -401,7 +403,7 @@ Transform:
   m_GameObject: {fileID: 332541218}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.4825, y: -1.69067, z: 0}
+  m_LocalPosition: {x: -7.31, y: -2.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -541,8 +543,8 @@ GameObject:
   - component: {fileID: 689515653}
   - component: {fileID: 689515652}
   m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
+  m_Name: Ground
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -630,8 +632,8 @@ Transform:
   m_GameObject: {fileID: 689515651}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.9825, y: -3.76, z: 0}
-  m_LocalScale: {x: 100, y: 1, z: 1}
+  m_LocalPosition: {x: 3.9825, y: -5.75, z: 0}
+  m_LocalScale: {x: 70.45183, y: 4.6171336, z: 0.7045183}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

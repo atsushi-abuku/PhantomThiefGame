@@ -7,12 +7,39 @@
             "actions": [
                 {
                     "name": "MoveRight",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "b72c014a-ed30-4e72-b3d3-e02660e4d6b3",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveLeft",
+                    "type": "Button",
+                    "id": "dedfbcea-c066-40d9-a934-1e87c834e0bc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "0fa1be22-97e5-4ca7-900b-a0f783ddea70",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "64069d41-f0ce-4456-acb3-0225449688a9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -26,32 +53,37 @@
                     "action": "MoveRight",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "New action map1",
-            "id": "b3d9b194-fa49-4262-8781-70ea3d5f2089",
-            "actions": [
-                {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "6c2dc2a6-ed37-4ac1-9520-38c63c5552b6",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
+                },
                 {
                     "name": "",
-                    "id": "24229bcb-4465-48d8-9a9d-16f5ce41789c",
-                    "path": "",
+                    "id": "13e7e179-30d4-4e45-87f4-43d03bae6f89",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "MoveLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "58a2107c-b158-4a3b-93d2-545a28e41e35",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f94cfe68-0003-4d0c-8820-b53c053f9671",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
