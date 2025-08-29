@@ -1,33 +1,33 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Thief : MonoBehaviour
 {
     Hp hp;
     Rigidbody rigidBody;
+    ThiefInput thiefInput;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         hp = new Hp(3);
         rigidBody = GetComponent<Rigidbody>();
+        thiefInput = new ThiefInput();
+        thiefInput.Move.MoveRight.performed += MoveRight;
+        thiefInput.Enable();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Move();
+       
     }
 
-    private void Move()
-    {
-        MoveRight();
-    }
 
-    void MoveRight()
+    void MoveRight(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            rigidBody.linearVelocity += new Vector3(1, 0, 0);
-        }
+        rigidBody.linearVelocity += new Vector3(1, 0, 0);
+        Debug.Log("D");
     }
 }
