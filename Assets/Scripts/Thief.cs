@@ -5,6 +5,7 @@ public class Thief : MonoBehaviour
 {
     Hp hp;
     Rigidbody rigidBody;
+    Vector3 velocity;
     ThiefInput thiefInput;
 
     public int maxJumpCount = 1;
@@ -23,6 +24,7 @@ public class Thief : MonoBehaviour
      {
          hp = new Hp(3);
          rigidBody = GetComponent<Rigidbody>();
+         velocity = rigidBody.linearVelocity;
          thiefInput = new ThiefInput();
         //D‚Å‰EˆÚ“®
         thiefInput.Move.MoveRight.performed += ctx =>
@@ -66,7 +68,7 @@ public class Thief : MonoBehaviour
      // Update is called once per frame
      void Update()
      {
-         Vector3 velocity = rigidBody.linearVelocity;
+         velocity = rigidBody.linearVelocity;
          velocity.x = moveDirection * moveSpeed;
          rigidBody.linearVelocity = velocity;
      }
@@ -77,7 +79,7 @@ public class Thief : MonoBehaviour
         //”ò‚×‚é‚Æ‚«
         if (jumpCount < maxJumpCount) 
         {
-            Vector3 velocity = rigidBody.linearVelocity;
+            velocity = rigidBody.linearVelocity;
             velocity.y = 8;
             rigidBody.linearVelocity = velocity;
             jumpCount++;
@@ -92,6 +94,11 @@ public class Thief : MonoBehaviour
             moveDirection = 0f;
         if (!isDashPressed)
             moveSpeed = 2f;
+    }
+
+    public void Damage()
+    {
+        //HP‚ð1Œ¸‚ç‚·
     }
 
 }

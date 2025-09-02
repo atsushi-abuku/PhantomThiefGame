@@ -17,6 +17,7 @@ public sealed class HitBoxGenerator
     public GameObject Generate(Vector3 position, Vector3 hitRange)
     {
         GameObject generatedObject = new GameObject();
+        generatedObject.AddComponent<BoxCollider>();
         generatedObject.AddComponent<HitBox>();
         generatedObject.GetComponent<HitBox>().SetHitRange(hitRange);
         return generatedObject;
