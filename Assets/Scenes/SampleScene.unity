@@ -291,6 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxJumpCount: 1
   jumpCount: 0
+  moveSpeed: 3
 --- !u!54 &332541220
 Rigidbody:
   m_ObjectHideFlags: 0

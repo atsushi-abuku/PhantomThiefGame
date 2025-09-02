@@ -82,6 +82,7 @@ public class Thief : MonoBehaviour
             jumpCount++;
         }
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))  //‹ó’†‚É‚ ‚é‘«ê‚É‚àGround‚Æ‚¢‚¤tag‚ğ‚Â‚¯‚é•K—v‚ª‚ ‚é
@@ -94,4 +95,6 @@ public class Thief : MonoBehaviour
                 moveSpeed = 2f;
         }
     }
+
 } 
+
