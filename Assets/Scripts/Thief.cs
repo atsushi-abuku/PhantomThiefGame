@@ -74,6 +74,7 @@ public class Thief : MonoBehaviour
     //Spaceでジャンプ(1段)
     void Jump(InputAction.CallbackContext context)
     {
+        //飛べるとき
         if (jumpCount < maxJumpCount) 
         {
             Vector3 velocity = rigidBody.linearVelocity;
@@ -82,19 +83,15 @@ public class Thief : MonoBehaviour
             jumpCount++;
         }
     }
-
-    private void OnCollisionEnter(Collision collision)
+    //着地
+    public void OnFootTouchGround()
     {
-        if (collision.gameObject.CompareTag("Ground"))  //空中にある足場にもGroundというtagをつける必要がある
-        {
-            jumpCount = 0;
-            //着地した瞬間にキーが押されていなければ停止
-            if(!isRightPressed && !isLeftPressed)
-                moveDirection = 0f;
-            if (!isDashPressed)
-                moveSpeed = 2f;
-        }
+        jumpCount = 0;
+        //着地した瞬間にキーが押されていなければ停止
+        if(!isRightPressed && !isLeftPressed)
+            moveDirection = 0f;
+        if (!isDashPressed)
+            moveSpeed = 2f;
     }
 
-} 
-
+}
