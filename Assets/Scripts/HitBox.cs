@@ -19,7 +19,7 @@ public class HitBox : MonoBehaviour
     {
         if(other.tag == "Thief")
         {
-            //other.GetComponent<Thief>().Damage();
+            other.GetComponent<Thief>().Damage();
         }
     }
 
