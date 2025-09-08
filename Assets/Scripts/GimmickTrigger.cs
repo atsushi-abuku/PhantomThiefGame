@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class GimmickTrigger : MonoBehaviour
 {
-    public delegate void GimmickFunc();
-    GimmickFunc gimmickFunc;
-    Vector3 triggerRange;
+    public delegate void GimmickTriggerFunc();
+    GimmickTriggerFunc gimmickTriggerFunc;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,15 +17,15 @@ public class GimmickTrigger : MonoBehaviour
         
     }
 
-    public void InitGimmickTrigger(GimmickFunc gimmickFunc, Vector3 triggerRange)
+    public void SetInvokeGimmickFunc(GimmickTriggerFunc gimmickTriggerFunc)
     {
-        this.gimmickFunc = gimmickFunc;
+        this.gimmickTriggerFunc = gimmickTriggerFunc;
         this.AddComponent<SphereCollider>();
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        gimmickFunc();
+        gimmickTriggerFunc();
     }
 }
