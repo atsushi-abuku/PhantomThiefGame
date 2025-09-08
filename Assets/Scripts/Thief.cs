@@ -99,6 +99,8 @@ public class Thief : MonoBehaviour
     public void Damage()
     {
         //HP‚ð1Œ¸‚ç‚·
+        hp = hp.SubHp(new Hp(1));
+        Debug.Log(hp.getValue());
     }
 
 }

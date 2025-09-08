@@ -23,6 +23,11 @@ public class Needle : MonoBehaviour, IGimmickObstacle
         trigger.Stanby();
     }
 
+    public void ModeChange()
+    {
+        trigger.Stanby();
+    }
+
     public void InvokeGimmick()
     {
         this.transform.position = basePosition + this.transform.up;

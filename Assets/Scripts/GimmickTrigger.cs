@@ -1,14 +1,16 @@
 using Unity.VisualScripting;
 using UnityEngine;
+public delegate void InvokeGimmickFunc();
 
 public class GimmickTrigger : MonoBehaviour
 {
-    public delegate void GimmickTriggerFunc();
-    GimmickTriggerFunc gimmickTriggerFunc;
+
+    InvokeGimmickFunc invokeGimmickFunc;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        this.GetComponent<SphereCollider>().enabled = false;
     }
 
     // Update is called once per frame
@@ -16,16 +18,18 @@ public class GimmickTrigger : MonoBehaviour
     {
         
     }
-
-    public void SetInvokeGimmickFunc(GimmickTriggerFunc gimmickTriggerFunc)
+    public void SetInvokeGimmickFunc(InvokeGimmickFunc invokeGimmickFunc)
     {
-        this.gimmickTriggerFunc = gimmickTriggerFunc;
-        this.AddComponent<SphereCollider>();
+        this.invokeGimmickFunc = invokeGimmickFunc;
     }
 
+    public void Stanby()
+    {
+        this.GetComponent<SphereCollider>().enabled = true;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        gimmickTriggerFunc();
+        invokeGimmickFunc();
     }
 }

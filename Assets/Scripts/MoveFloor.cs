@@ -38,6 +38,7 @@ public class MoveFloor : MonoBehaviour, IGimmickObstacle
         endTransform.position -= moveVec;
     }
 
+
     public void FaseChange()
     {
         trigger.Stanby();
