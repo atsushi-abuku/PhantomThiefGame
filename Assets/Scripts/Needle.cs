@@ -9,7 +9,6 @@ public class Needle : MonoBehaviour, IGimmickObstacle
     {
         basePosition = transform.position;
         trigger.SetInvokeGimmickFunc(InvokeGimmick);
-
     }
 
     // Update is called once per frame
