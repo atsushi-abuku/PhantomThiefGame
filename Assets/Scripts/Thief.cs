@@ -12,7 +12,7 @@ public class Thief : MonoBehaviour
     public int jumpCount = 0;
 
     private float moveDirection = 0f;
-    public float moveSpeed = 3f;
+    private MoveSpeed moveSpeed;
 
     private bool isRightPressed = false;
     private bool isLeftPressed = false;
@@ -26,6 +26,7 @@ public class Thief : MonoBehaviour
          rigidBody = GetComponent<Rigidbody>();
          velocity = rigidBody.linearVelocity;
          thiefInput = new ThiefInput();
+        moveSpeed = new MoveSpeed(2f);
         //D‚Å‰EˆÚ“®
         thiefInput.Move.MoveRight.performed += ctx =>
         {
@@ -52,13 +53,13 @@ public class Thief : MonoBehaviour
         thiefInput.Move.Dash.performed += ctx =>
         {
             isDashPressed = true;
-            moveSpeed = 4f;
+            moveSpeed = moveSpeed.Set(4f);
         };
         thiefInput.Move.Dash.canceled += ctx =>
         {
             isDashPressed = false;
-            if(jumpCount == 0) 
-                moveSpeed = 2f;
+            if (jumpCount == 0)
+                moveSpeed = moveSpeed.Set(2f);
         };
          //ƒWƒƒƒ“ƒv
          thiefInput.Move.Jump.started += Jump;
@@ -69,7 +70,7 @@ public class Thief : MonoBehaviour
      void Update()
      {
          velocity = rigidBody.linearVelocity;
-         velocity.x = moveDirection * moveSpeed;
+         velocity.x = moveDirection * moveSpeed.getValue();
          rigidBody.linearVelocity = velocity;
      }
     
@@ -93,7 +94,7 @@ public class Thief : MonoBehaviour
         if(!isRightPressed && !isLeftPressed)
             moveDirection = 0f;
         if (!isDashPressed)
-            moveSpeed = 2f;
+            moveSpeed = moveSpeed.Set(2f);
     }
 
     public void Damage()
