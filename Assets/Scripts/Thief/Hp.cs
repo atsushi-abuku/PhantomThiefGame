@@ -10,13 +10,13 @@ public class Hp
         this.value = value;
     }
 
-    public int getValue()
+    public int GetValue()
     {
         return value;
     }
 
     public Hp SubHp(Hp hp)
     {
-        return new Hp(this.value - hp.getValue());
+        return new Hp(this.value - hp.GetValue());
     }
 }

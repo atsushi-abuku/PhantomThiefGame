@@ -4,7 +4,9 @@ public delegate void InvokeGimmickFunc();
 
 public class GimmickTrigger : MonoBehaviour
 {
+
     InvokeGimmickFunc invokeGimmickFunc;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,7 +18,6 @@ public class GimmickTrigger : MonoBehaviour
     {
         
     }
-
     public void SetInvokeGimmickFunc(InvokeGimmickFunc invokeGimmickFunc)
     {
         this.invokeGimmickFunc = invokeGimmickFunc;

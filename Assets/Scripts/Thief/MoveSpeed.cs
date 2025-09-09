@@ -1,3 +1,4 @@
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public class MoveSpeed
@@ -9,7 +10,7 @@ public class MoveSpeed
         this.value = value;
     }
 
-    public float getValue()
+    public float GetValue()
     {
         return value;
     }
@@ -17,5 +18,10 @@ public class MoveSpeed
     public MoveSpeedÅ@Set(float newValue)
     {
         return new MoveSpeed(newValue);
+    }
+
+    public MoveSpeed AddSpeed(MoveSpeed moveSpeed)
+    {
+        return new MoveSpeed(value + moveSpeed.GetValue());
     }
 }

@@ -5,9 +5,9 @@ public delegate void GimmickFunc(GameObject gameObject);
 
 public enum GimmickType
 {
-    Vanish,
-    Fall,
-    Up,
+    VANISH,
+    FALL,
+    RISE,
 }
 
 public class GimmickFuncGenerator
@@ -27,23 +27,25 @@ public class GimmickFuncGenerator
     {
         switch (type)
         {
-            case GimmickType.Vanish:
+            case GimmickType.VANISH:
                 return (GameObject gameObject) => { gameObject.SetActive(false);};
-            case GimmickType.Fall:
+            case GimmickType.FALL:
                 return (GameObject gameObject) => {
                     if(gameObject.GetComponent<Rigidbody>() == null)
                     {
                         gameObject.AddComponent<Rigidbody>();
                     }
+                    gameObject.GetComponent<Rigidbody>().isKinematic = false;
                     gameObject.GetComponent<Rigidbody>().useGravity = true;
                 };
-            case GimmickType.Up:
+            case GimmickType.RISE:
                 return (GameObject gameObject) =>
                 {
                     if (gameObject.GetComponent<Rigidbody>() == null)
                     {
                         gameObject.AddComponent<Rigidbody>();
                     }
+                    gameObject.GetComponent<Rigidbody>().isKinematic = false;
                     gameObject.GetComponent<Rigidbody>().linearVelocity += new Vector3(0,1,0);
                 };
             default:

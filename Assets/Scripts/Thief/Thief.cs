@@ -70,7 +70,7 @@ public class Thief : MonoBehaviour
      void Update()
      {
          velocity = rigidBody.linearVelocity;
-         velocity.x = moveDirection * moveSpeed.getValue();
+         velocity.x = moveDirection * moveSpeed.GetValue();
          rigidBody.linearVelocity = velocity;
      }
     
@@ -101,7 +101,7 @@ public class Thief : MonoBehaviour
     {
         //HP‚ð1Œ¸‚ç‚·
         hp = hp.SubHp(new Hp(1));
-        Debug.Log(hp.getValue());
+        Debug.Log(hp.GetValue());
     }
 
 }
