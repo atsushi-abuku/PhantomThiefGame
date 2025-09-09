@@ -35,6 +35,7 @@ public class GimmickFuncGenerator
                     {
                         gameObject.AddComponent<Rigidbody>();
                     }
+                    gameObject.GetComponent<Rigidbody>().isKinematic = false;
                     gameObject.GetComponent<Rigidbody>().useGravity = true;
                 };
             case GimmickType.RISE:
@@ -44,6 +45,7 @@ public class GimmickFuncGenerator
                     {
                         gameObject.AddComponent<Rigidbody>();
                     }
+                    gameObject.GetComponent<Rigidbody>().isKinematic = false;
                     gameObject.GetComponent<Rigidbody>().linearVelocity += new Vector3(0,1,0);
                 };
             default:

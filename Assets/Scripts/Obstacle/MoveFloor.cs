@@ -52,21 +52,28 @@ public class MoveFloor : MonoBehaviour, IGimmickObstacle
 
     private void OnCollisionEnter(Collision collision)
     {
-        Transform topParent = collision.transform;
-        while (topParent.parent != null) {
-            topParent = topParent.parent;
-            Debug.Log(topParent);
+        if (collision.gameObject.tag == "Thief")
+        {
+            Transform topParent = collision.transform;
+            while (topParent.parent != null)
+            {
+                topParent = topParent.parent;
+                Debug.Log(topParent);
+            }
+            topParent.parent = this.transform;
         }
-        topParent.parent = this.transform;
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        Transform topParent = collision.transform;
-        while (topParent.parent != this.transform && topParent.parent != null)
+        if (collision.gameObject.tag == "Thief")
         {
-            topParent = topParent.parent;
+            Transform topParent = collision.transform;
+            while (topParent.parent != this.transform && topParent.parent != null)
+            {
+                topParent = topParent.parent;
+            }
+            topParent.parent = null;
         }
-        topParent.parent = null;
     }
 }
