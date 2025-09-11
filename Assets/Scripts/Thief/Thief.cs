@@ -7,6 +7,7 @@ public class Thief : MonoBehaviour
     Rigidbody rigidBody;
     Vector3 velocity;
     ThiefInput thiefInput;
+    Visual visual;
 
     public int maxJumpCount = 1;
     public int jumpCount = 0;
@@ -26,6 +27,7 @@ public class Thief : MonoBehaviour
          rigidBody = GetComponent<Rigidbody>();
          velocity = rigidBody.linearVelocity;
          thiefInput = new ThiefInput();
+        visual = new Visual(0);
         moveSpeed = new MoveSpeed(2f);
         //D‚Å‰EˆÚ“®
         thiefInput.Move.MoveRight.performed += ctx =>
@@ -102,6 +104,11 @@ public class Thief : MonoBehaviour
         //HP‚ð1Œ¸‚ç‚·
         hp = hp.SubHp(new Hp(1));
         Debug.Log(hp.GetValue());
+    }
+
+    void OnDestroy()
+    {
+        visual.Dispose();
     }
 
 }
