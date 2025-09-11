@@ -21,4 +21,9 @@ public class Timer
         }
     }
 
+    public float GetRemainingTime()
+    {
+        return time;
+    }
+
 };

@@ -1,0 +1,15 @@
+Thief,GuardMan
+@Thief 1 @negirai
+
+@aisatu
+GuardMan,smile,こんにちは
+@selectStart
+Thief,smile,こんにちは
+Thief,smile,おはよう
+Thief,normal,だまれ
+@selectEnd
+@end
+
+@negirai
+GuardMan,normal,ご苦労様です．
+@end
