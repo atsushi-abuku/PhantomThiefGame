@@ -19,8 +19,12 @@ public class Thief : MonoBehaviour
     private bool isLeftPressed = false;
     private bool isDashPressed = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private CapsuleCollider capsuleCollider;
+    private float originalHeight;
+    private Vector3 originalCenter;
+    private bool isCrouching = false;
 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
      void Start()
      {
          hp = new Hp(3);
@@ -66,6 +70,11 @@ public class Thief : MonoBehaviour
          //ƒWƒƒƒ“ƒv
          thiefInput.Move.Jump.started += Jump;
          thiefInput.Enable();
+        //C‚Å‚µ‚á‚ª‚İ
+        capsuleCollider = GetComponent<CapsuleCollider>();
+        originalHeight = capsuleCollider.height;
+        originalCenter = capsuleCollider.center;
+        thiefInput.Move.Crouch.performed += ctx => Crouch();
      }
 
      // Update is called once per frame
@@ -97,6 +106,25 @@ public class Thief : MonoBehaviour
             moveDirection = 0f;
         if (!isDashPressed)
             moveSpeed = moveSpeed.Set(2f);
+    }
+
+    void Crouch()
+    {
+        //ó‘Ô‚ğØ‚è‘Ö‚¦‚é
+        isCrouching = !isCrouching;
+
+        if (isCrouching)
+        {
+            capsuleCollider.height = originalHeight / 2;
+            capsuleCollider.center = new Vector3(originalCenter.x, originalCenter.y-originalHeight/4, originalCenter.z);
+            Debug.Log("‚µ‚á‚ª‚İó‘Ô");
+        }
+        else
+        {
+            capsuleCollider.height = originalHeight;
+            capsuleCollider.center = originalCenter;
+            Debug.Log("—§‚¿ó‘Ô");
+        }
     }
 
     public void Damage()

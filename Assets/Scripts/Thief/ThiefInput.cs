@@ -126,6 +126,15 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""f02e6ce7-4470-4cd1-a906-c9234c590d20"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -172,6 +181,17 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ac1df4a3-b518-43d4-8574-1a9080ec93ce"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -212,6 +232,7 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
         m_Move_MoveLeft = m_Move.FindAction("MoveLeft", throwIfNotFound: true);
         m_Move_Jump = m_Move.FindAction("Jump", throwIfNotFound: true);
         m_Move_Dash = m_Move.FindAction("Dash", throwIfNotFound: true);
+        m_Move_Crouch = m_Move.FindAction("Crouch", throwIfNotFound: true);
         // Visual
         m_Visual = asset.FindActionMap("Visual", throwIfNotFound: true);
         m_Visual_Change = m_Visual.FindAction("Change", throwIfNotFound: true);
@@ -300,6 +321,7 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Move_MoveLeft;
     private readonly InputAction m_Move_Jump;
     private readonly InputAction m_Move_Dash;
+    private readonly InputAction m_Move_Crouch;
     /// <summary>
     /// Provides access to input actions defined in input action map "Move".
     /// </summary>
@@ -327,6 +349,10 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Move/Dash".
         /// </summary>
         public InputAction @Dash => m_Wrapper.m_Move_Dash;
+        /// <summary>
+        /// Provides access to the underlying input action "Move/Crouch".
+        /// </summary>
+        public InputAction @Crouch => m_Wrapper.m_Move_Crouch;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -365,6 +391,9 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @Crouch.started += instance.OnCrouch;
+            @Crouch.performed += instance.OnCrouch;
+            @Crouch.canceled += instance.OnCrouch;
         }
 
         /// <summary>
@@ -388,6 +417,9 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @Crouch.started -= instance.OnCrouch;
+            @Crouch.performed -= instance.OnCrouch;
+            @Crouch.canceled -= instance.OnCrouch;
         }
 
         /// <summary>
@@ -552,6 +584,13 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDash(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Crouch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCrouch(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Visual" which allows adding and removing callbacks.
