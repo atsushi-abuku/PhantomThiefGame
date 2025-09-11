@@ -59,13 +59,13 @@ public class Thief : MonoBehaviour
         thiefInput.Move.Dash.performed += ctx =>
         {
             isDashPressed = true;
-            moveSpeed = moveSpeed.Set(4f);
+            moveSpeed = moveSpeed.AddSpeed(new MoveSpeed(2f));
         };
         thiefInput.Move.Dash.canceled += ctx =>
         {
             isDashPressed = false;
             if (jumpCount == 0)
-                moveSpeed = moveSpeed.Set(2f);
+                moveSpeed = moveSpeed.SubSpeed(new MoveSpeed(2f));
         };
          //ƒWƒƒƒ“ƒv
          thiefInput.Move.Jump.started += Jump;
