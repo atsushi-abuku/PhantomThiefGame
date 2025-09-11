@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class Thief : MonoBehaviour
@@ -23,6 +24,8 @@ public class Thief : MonoBehaviour
     private float originalHeight;
     private Vector3 originalCenter;
     private bool isCrouching = false;
+
+    private bool isStuck = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
      void Start()
@@ -81,8 +84,10 @@ public class Thief : MonoBehaviour
      void Update()
      {
          velocity = rigidBody.linearVelocity;
-         velocity.x = moveDirection * moveSpeed.GetValue();
-         rigidBody.linearVelocity = velocity;
+        //壁に刺さっていないとき
+        if (!isStuck) velocity.x = moveDirection * moveSpeed.GetValue();
+        else velocity.x = 0f;
+        rigidBody.linearVelocity = velocity;
      }
     
     //Spaceでジャンプ(1段)
@@ -101,7 +106,8 @@ public class Thief : MonoBehaviour
     public void OnFootTouchGround()
     {
         jumpCount = 0;
-        //着地した瞬間にキーが押されていなければ停止
+        isStuck = false;
+        //着地した瞬間にキーが押されていなければ
         if(!isRightPressed && !isLeftPressed)
             moveDirection = 0f;
         if (!isDashPressed)
@@ -124,6 +130,23 @@ public class Thief : MonoBehaviour
             capsuleCollider.height = originalHeight;
             capsuleCollider.center = originalCenter;
             Debug.Log("立ち状態");
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Wall"))
+        {
+            Vector3 contactDirection = (other.transform.position - transform.position).normalized;
+
+            // 右に進んでいて右側にぶつかった、または左に進んでいて左側にぶつかった
+            if ((moveDirection > 0 && contactDirection.x > 0.5f) ||
+                (moveDirection < 0 && contactDirection.x < -0.5f))
+            {
+                moveDirection = 0f;
+                isStuck = true;
+                Debug.Log("横から刺さった → 移動停止");
+            }
         }
     }
 
