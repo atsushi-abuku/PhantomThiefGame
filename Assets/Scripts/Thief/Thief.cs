@@ -12,6 +12,7 @@ public class Thief : MonoBehaviour
 
     public int maxJumpCount = 1;
     public int jumpCount = 0;
+    //public Animator thiefAnimator;
 
     private float moveDirection = 0f;
     private MoveSpeed moveSpeed;
@@ -78,6 +79,8 @@ public class Thief : MonoBehaviour
         originalHeight = capsuleCollider.height;
         originalCenter = capsuleCollider.center;
         thiefInput.Move.Crouch.performed += ctx => Crouch();
+
+        //thiefAnimator = GetComponent<Animator>();
      }
 
      // Update is called once per frame
@@ -88,8 +91,8 @@ public class Thief : MonoBehaviour
         if (!isStuck) velocity.x = moveDirection * moveSpeed.GetValue();
         else velocity.x = 0f;
         rigidBody.linearVelocity = velocity;
+        //thiefAnimator.SetFloat("speed",Mathf.Abs(velocity.x));
      }
-    
     //Space‚ÅƒWƒƒƒ“ƒv(1’i)
     void Jump(InputAction.CallbackContext context)
     {
