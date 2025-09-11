@@ -15,13 +15,19 @@ public class MoveSpeed
         return value;
     }
 
-    public MoveSpeedÅ@Set(float newValue)
+    public MoveSpeed Set(float newValue)
     {
         return new MoveSpeed(newValue);
     }
+   
 
     public MoveSpeed AddSpeed(MoveSpeed moveSpeed)
     {
         return new MoveSpeed(value + moveSpeed.GetValue());
+    }
+
+    public MoveSpeed SubSpeed(MoveSpeed moveSpeed) 
+    {
+        return new MoveSpeed(value - moveSpeed.GetValue());
     }
 }

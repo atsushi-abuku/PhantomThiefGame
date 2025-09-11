@@ -1,29 +1,42 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Visual : MonoBehaviour
+public enum VisualType
 {
-    VisualInput visualInput;
-    public int[] visuals = { 0, 1, 2 };
-    private int currentIndex = 0;
+    Thief = 0,
+    GuardMan = 1,
+    NPC = 2,
+}
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+public class Visual 
+{
+    private int visual;
+    ThiefInput thiefInput;
+    Dictionary<VisualType, GameObject> visuals = new Dictionary<VisualType, GameObject>
     {
-        visualInput = new VisualInput();
-        visualInput.Enable();
+        { VisualType.Thief,null },
+        { VisualType.GuardMan,null },
+        { VisualType.NPC,null },
+    };
+
+    public Visual(int value)
+    {
+        this .visual = value;
+        thiefInput = new ThiefInput();
+        thiefInput.Enable();
         //Q‚ð‰Ÿ‚³‚ê‚½‚ç
-        visualInput.VisualChange.Change.performed += ctx => CycleVisual();
+        thiefInput.Visual.Change.performed += ctx => CycleVisual();
     }
 
-    void CycleVisual()
+    private void CycleVisual()
     {
-        currentIndex = (currentIndex + 1) % visuals.Length;
-        Debug.Log("Žp" +  currentIndex);
+        visual = (visual + 1) % visuals.Count;
+        Debug.Log("Žp" +  (VisualType)visual);
     }
     
-    void OnDestroy()
+    public void Dispose()
     {
-        visualInput.Dispose();
+        thiefInput.Dispose();
     }
 }
