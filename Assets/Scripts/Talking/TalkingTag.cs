@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class TalkingTag
 {
-    public string command;
+    public TalkingTag(string tagText)
+    {
 
+    }
 }

@@ -1,0 +1,19 @@
+Thief,GuardMan
+GuardMan,smile,こんにちは
+@choice
+Thief,smile,こんにちは @normal
+Thief,smile,おはよう @normal
+Thief,normal,だまれ @odoroki
+@choiceEnd
+
+@odoroki
+GuardMan,normal,(なんだこいつ...)
+@jump @normal
+
+@normal
+GuardMan,normal,ここからは立ち入り禁止ですよ．
+@end
+
+@negirai
+GuardMan,normal,ご苦労様です．
+@end

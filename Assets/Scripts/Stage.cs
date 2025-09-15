@@ -15,6 +15,7 @@ public class Stage : MonoBehaviour
     [SerializeField] float limitTime;
     [SerializeField] StageFase stageFase;
     [SerializeField] GameObject fieldObjects;
+    private Dictionary<string, bool> eventFlgs;
     private Field field;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
