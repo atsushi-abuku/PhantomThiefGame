@@ -11,28 +11,43 @@ enum StageFase
 public class Stage : MonoBehaviour
 {
     private Timer timer;
+    [SerializeField] Thief thief;
     [SerializeField] float limitTime;
     [SerializeField] StageFase stageFase;
-    private List<IGimmickObstacle> gimmickObstacles;
+    [SerializeField] GameObject fieldObjects;
+    private Dictionary<string, bool> eventFlgs;
+    private Field field;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        timer = new Timer(limitTime, FaseChange);
+        field = new Field(fieldObjects);
+        field.SetTreasureFunc(FaseChange);
+
+        timer = new Timer(limitTime, GameOver);
         stageFase = StageFase.GO;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        switch (stageFase)
+        {
+            case StageFase.BACK:
+                Debug.Log(timer.GetRemainingTime());
+                timer.Update();
+                break;
+        }
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("gameover");
     }
 
     public void FaseChange()
     {
         stageFase = StageFase.BACK;
-        foreach(IGimmickObstacle gObstacle in gimmickObstacles)
-        {
-            gObstacle.FaseChange();
-        }
+        field.FaseChange();
     }
 }

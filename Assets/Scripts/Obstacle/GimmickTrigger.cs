@@ -30,6 +30,9 @@ public class GimmickTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        invokeGimmickFunc();
+        if (other.tag == "Thief")
+        {
+            invokeGimmickFunc();
+        }
     }
 }
