@@ -91,8 +91,13 @@ public class Thief : MonoBehaviour
         if (!isStuck) velocity.x = moveDirection * moveSpeed.GetValue();
         //•Ç‚ÉŽh‚³‚Á‚Ä‚¢‚é‚Æ‚«
         else velocity.x = 0f;
+        //Œü‚«‚ÌØ‚è‘Ö‚¦
+        if (moveDirection > 0) transform.rotation = Quaternion.Euler(0, 90, 0);
+        else if (moveDirection < 0) transform.rotation = Quaternion.Euler(0, 270, 0);
         rigidBody.linearVelocity = velocity;
         thiefAnimator.SetFloat("speed",Mathf.Abs(velocity.x));
+        thiefAnimator.SetInteger("JumpCount", jumpCount);
+        thiefAnimator.SetFloat("height", capsuleCollider.height);
      }
     //Space‚ÅƒWƒƒƒ“ƒv(1’i)
     void Jump(InputAction.CallbackContext context)
