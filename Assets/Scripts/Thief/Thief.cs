@@ -25,6 +25,7 @@ public class Thief : MonoBehaviour
     private float originalHeight;
     private Vector3 originalCenter;
     private bool isCrouching = false;
+    public Foot foot;
 
     private bool isStuck = false;
 
@@ -97,7 +98,7 @@ public class Thief : MonoBehaviour
         rigidBody.linearVelocity = velocity;
         thiefAnimator.SetFloat("speed",Mathf.Abs(velocity.x));
         thiefAnimator.SetInteger("JumpCount", jumpCount);
-        thiefAnimator.SetFloat("height", capsuleCollider.height);
+        thiefAnimator.SetBool("isCrouching", isCrouching);
      }
     //SpaceÇ≈ÉWÉÉÉìÉv(1íi)
     void Jump(InputAction.CallbackContext context)
@@ -130,14 +131,16 @@ public class Thief : MonoBehaviour
 
         if (isCrouching)
         {
-            capsuleCollider.height = originalHeight / 2;
-            capsuleCollider.center = new Vector3(originalCenter.x, originalCenter.y-originalHeight/4, originalCenter.z);
+            capsuleCollider.direction = 2;
+            capsuleCollider.center = new Vector3(originalCenter.x, originalCenter.y-originalHeight/4, 0.3f);
+            foot.SetCrouchState(true);
             Debug.Log("ÇµÇ·Ç™Ç›èÛë‘");
         }
         else
         {
-            capsuleCollider.height = originalHeight;
+            capsuleCollider.direction = 1;
             capsuleCollider.center = originalCenter;
+            foot.SetCrouchState(false);
             Debug.Log("óßÇøèÛë‘");
         }
     }
