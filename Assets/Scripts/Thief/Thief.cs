@@ -5,122 +5,60 @@ using UnityEngine.InputSystem;
 public class Thief : MonoBehaviour
 {
     Hp hp;
-    Rigidbody rigidBody;
-    Vector3 velocity;
-    ThiefInput thiefInput;
     Visual visual;
+    Rigidbody rigidBody;
+    Animator thiefAnimator;
+    CapsuleCollider capsuleCollider;
 
-    public int maxJumpCount = 1;
     public int jumpCount = 0;
-    public Animator thiefAnimator;
+    public int maxJumpCount = 1;
+    public Foot foot;
 
-    private float moveDirection = 0f;
-    private MoveSpeed moveSpeed;
+    float originalHeight;
+    Vector3 originalCenter;
+    bool isCrouching = false;
 
-    private bool isRightPressed = false;
-    private bool isLeftPressed = false;
-    private bool isDashPressed = false;
-
-    private CapsuleCollider capsuleCollider;
-    private float originalHeight;
-    private Vector3 originalCenter;
-    private bool isCrouching = false;
-
-    private bool isStuck = false;
+    Move move;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-     void Start()
-     {
-         hp = new Hp(3);
-         rigidBody = GetComponent<Rigidbody>();
-         velocity = rigidBody.linearVelocity;
-         thiefInput = new ThiefInput();
+    void Start()
+    {
+        hp = new Hp(3);
         visual = new Visual(0);
-        moveSpeed = new MoveSpeed(2f);
-        //Dで右移動
-        thiefInput.Move.MoveRight.performed += ctx =>
-        {
-            isRightPressed = true;
-            moveDirection = 1f;
-        };
-        thiefInput.Move.MoveRight.canceled += ctx =>
-        {
-            isRightPressed = false;
-            if (moveDirection == 1f && jumpCount == 0) moveDirection = 0f;
-        };
-        //Aで左移動
-        thiefInput.Move.MoveLeft.performed += ctx =>
-        {
-            isLeftPressed = true;
-            moveDirection = -1f;
-        };
-        thiefInput.Move.MoveLeft.canceled += ctx =>
-        {
-            isLeftPressed = false;
-            if (moveDirection == -1f && jumpCount == 0) moveDirection = 0f;
-        };
-        //Shiftでダッシュ
-        thiefInput.Move.Dash.performed += ctx =>
-        {
-            isDashPressed = true;
-            moveSpeed = moveSpeed.AddSpeed(new MoveSpeed(2f));
-        };
-        thiefInput.Move.Dash.canceled += ctx =>
-        {
-            isDashPressed = false;
-            if (jumpCount == 0)
-                moveSpeed = moveSpeed.SubSpeed(new MoveSpeed(2f));
-        };
-         //ジャンプ
-         thiefInput.Move.Jump.started += Jump;
-         thiefInput.Enable();
-        //Cでしゃがみ
+        rigidBody = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
+        thiefAnimator = GetComponent<Animator>();
+
         originalHeight = capsuleCollider.height;
         originalCenter = capsuleCollider.center;
+
+        move = new Move(rigidBody, jumpCount, maxJumpCount);
+
+        ThiefInput thiefInput = new ThiefInput();
+        thiefInput.Enable();
+        //Cでしゃがみ切り替え
         thiefInput.Move.Crouch.performed += ctx => Crouch();
+}
 
-        thiefAnimator = GetComponent<Animator>();
-     }
-
-     // Update is called once per frame
-     void Update()
+// Update is called once per frame
+void Update()
      {
-         velocity = rigidBody.linearVelocity;
-        //壁に刺さっていないとき
-        if (!isStuck) velocity.x = moveDirection * moveSpeed.GetValue();
-        //壁に刺さっているとき
-        else velocity.x = 0f;
+        move.ApplyMovement();
+        jumpCount = move.GetJumpCount();
         //向きの切り替え
-        if (moveDirection > 0) transform.rotation = Quaternion.Euler(0, 90, 0);
-        else if (moveDirection < 0) transform.rotation = Quaternion.Euler(0, 270, 0);
-        rigidBody.linearVelocity = velocity;
-        thiefAnimator.SetFloat("speed",Mathf.Abs(velocity.x));
-        thiefAnimator.SetInteger("JumpCount", jumpCount);
-        thiefAnimator.SetFloat("height", capsuleCollider.height);
-     }
-    //Spaceでジャンプ(1段)
-    void Jump(InputAction.CallbackContext context)
-    {
-        //飛べるとき
-        if (jumpCount < maxJumpCount) 
-        {
-            velocity = rigidBody.linearVelocity;
-            velocity.y = 8;
-            rigidBody.linearVelocity = velocity;
-            jumpCount++;
-        }
+        float dir = move.GetDirection();
+        if (dir > 0) transform.rotation = Quaternion.Euler(0, 90, 0);
+        else if (dir < 0) transform.rotation = Quaternion.Euler(0, 270, 0);
+        //アニメーション
+        thiefAnimator.SetFloat("speed", move.GetSpeed());
+        thiefAnimator.SetInteger("JumpCount", move.GetJumpCount());
+        thiefAnimator.SetBool("isCrouching", isCrouching);
     }
+
     //着地
     public void OnFootTouchGround()
     {
-        jumpCount = 0;
-        isStuck = false;
-        //着地した瞬間にキーが押されていなければ
-        if(!isRightPressed && !isLeftPressed)
-            moveDirection = 0f;
-        if (!isDashPressed)
-            moveSpeed = moveSpeed.Set(2f);
+        move.OnFootTouchGround();
     }
 
     void Crouch()
@@ -130,14 +68,16 @@ public class Thief : MonoBehaviour
 
         if (isCrouching)
         {
-            capsuleCollider.height = originalHeight / 2;
-            capsuleCollider.center = new Vector3(originalCenter.x, originalCenter.y-originalHeight/4, originalCenter.z);
+            capsuleCollider.direction = 2;
+            capsuleCollider.center = new Vector3(originalCenter.x, originalCenter.y-originalHeight/4, 0.3f);
+            foot.SetCrouchState(true);
             Debug.Log("しゃがみ状態");
         }
         else
         {
-            capsuleCollider.height = originalHeight;
+            capsuleCollider.direction = 1;
             capsuleCollider.center = originalCenter;
+            foot.SetCrouchState(false);
             Debug.Log("立ち状態");
         }
     }
@@ -149,11 +89,10 @@ public class Thief : MonoBehaviour
             Vector3 contactDirection = (other.transform.position - transform.position).normalized;
 
             // 右に進んでいて右側にぶつかった、または左に進んでいて左側にぶつかった
-            if ((moveDirection > 0 && contactDirection.x > 0.5f) ||
-                (moveDirection < 0 && contactDirection.x < -0.5f))
+            if ((move.GetDirection() > 0 && contactDirection.x > 0.5f) ||
+                (move.GetDirection() < 0 && contactDirection.x < -0.5f))
             {
-                moveDirection = 0f;
-                isStuck = true;
+                move.SetStuck(true);
                 Debug.Log("横から刺さった → 移動停止");
             }
         }
