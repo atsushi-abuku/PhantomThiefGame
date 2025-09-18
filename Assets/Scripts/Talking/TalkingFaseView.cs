@@ -45,9 +45,12 @@ public class TalkingFaseView : MonoBehaviour
         for(int i = 0; i < choices.Count; i++)
         {
             choiceList[i].gameObject.SetActive(true);
-            choiceList[i].text = choices[i].sentence; 
+            if (i == talkFaseManager.GetChoiceId())
+            {
+                choiceList[i].text = "¨" + choices[i].sentence;
+            }
+            else choiceList[i].text = choices[i].sentence;
         }
-        choiceList[talkFaseManager.GetChoiceId()].color = Color.red; 
         textBox.text = talkerLine.sentence;
 
         if (talkFaseManager.CheckIsEnded())
