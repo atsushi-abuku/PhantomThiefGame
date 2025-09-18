@@ -815,9 +815,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f3d531e5c08754fa630a2db6a0943c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxJumpCount: 1
   jumpCount: 0
-  thiefAnimator: {fileID: 0}
+  maxJumpCount: 1
   foot: {fileID: 1245146191}
 --- !u!4 &1938072455 stripped
 Transform:
