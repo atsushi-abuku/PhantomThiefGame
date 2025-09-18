@@ -106,7 +106,7 @@ public class Thief : MonoBehaviour
         if (jumpCount < maxJumpCount) 
         {
             velocity = rigidBody.linearVelocity;
-            velocity.y = 8;
+            velocity.y = 5;
             rigidBody.linearVelocity = velocity;
             jumpCount++;
         }
