@@ -4,11 +4,12 @@ using UnityEngine.InputSystem;
 
 public class Thief : MonoBehaviour
 {
-    Hp hp;
     Visual visual;
     Rigidbody rigidBody;
     Animator thiefAnimator;
     CapsuleCollider capsuleCollider;
+
+    public Hp hp;
 
     public int jumpCount = 0;
     public int maxJumpCount = 1;
