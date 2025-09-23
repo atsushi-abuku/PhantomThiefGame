@@ -32,7 +32,6 @@ public class Foot : MonoBehaviour
         {
             footCollider.center = new Vector3(0.3f, 0, 0);
             footCollider.size = new Vector3(1f, 0.1f, 1f);
-            Debug.Log("syagami");
         }
         else 
         {

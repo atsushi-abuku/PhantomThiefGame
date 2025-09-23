@@ -18,15 +18,14 @@ public class Move
     private bool isDashPressed = false;
     private bool isStuck = false;
 
-    public Move(Rigidbody rb, int jumpCount, int maxJumpCount)
+    public Move(Rigidbody rb,ThiefInput input, int jumpCount, int maxJumpCount)
     {
         rigidBody = rb;
+        thiefInput = input;
         this.jumpCount = jumpCount;
         this.maxJumpCount = maxJumpCount;
         velocity = rigidBody.linearVelocity;
         moveSpeed = new MoveSpeed(2f);
-        thiefInput = new ThiefInput();
-        thiefInput.Enable();
 
         //D‚Å‰EˆÚ“® 
         thiefInput.Move.MoveRight.performed += ctx => 
@@ -99,6 +98,11 @@ public class Move
         //•Ç‚ÉŽh‚³‚Á‚Ä‚¢‚é‚Æ‚«
         else velocity.x = 0f;
         rigidBody.linearVelocity = velocity;
+    }
+
+    public void Dispose()
+    {
+        thiefInput?.Disable();
     }
 
     

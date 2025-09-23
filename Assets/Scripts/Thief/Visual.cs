@@ -20,11 +20,10 @@ public class Visual
         { VisualType.NPC,null },
     };
 
-    public Visual(int value)
+    public Visual(int value,ThiefInput input)
     {
         this .visual = value;
-        thiefInput = new ThiefInput();
-        thiefInput.Enable();
+        thiefInput = input;
         //Q‚ð‰Ÿ‚³‚ê‚½‚ç
         thiefInput.Visual.Change.performed += ctx => CycleVisual();
     }
@@ -33,10 +32,5 @@ public class Visual
     {
         visual = (visual + 1) % visuals.Count;
         Debug.Log("Žp" +  (VisualType)visual);
-    }
-    
-    public void Dispose()
-    {
-        thiefInput.Dispose();
     }
 }
