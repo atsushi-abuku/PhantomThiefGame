@@ -705,7 +705,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1923263966}
   - component: {fileID: 1923263965}
-  - component: {fileID: 1923263967}
   m_Layer: 0
   m_Name: Wall Left
   m_TagString: Wall
@@ -749,18 +748,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1922220701}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1923263967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1923263964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebdfb964c17829d4abecded356ccac61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1938072448 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100264, guid: dd6ec75974b69a3409711f8110698bbb, type: 3}
