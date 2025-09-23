@@ -1,6 +1,8 @@
 using UnityEngine;
 
 public interface IGimmickObstacle
-{    void FaseChange();
+{    
+    void FaseChange();
     void InvokeGimmick();
+    void VisualizeGimmick();
 }

@@ -1,41 +1,60 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
-enum StageFase
+enum ActionFase
 {
     GO,
     BACK
 }
 
-public class Stage : MonoBehaviour
+public class ActionModeManager : MonoBehaviour, IGameMode
 {
     private Timer timer;
     [SerializeField] Thief thief;
     [SerializeField] float limitTime;
-    [SerializeField] StageFase stageFase;
+    [SerializeField] ActionFase actionFase;
     [SerializeField] GameObject fieldObjects;
-    private Dictionary<string, bool> eventFlgs;
     private Field field;
+    private Characters characters;
+    private bool isEnd;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         field = new Field(fieldObjects);
+        characters = new Characters(fieldObjects);
         field.SetTreasureFunc(FaseChange);
-
+        isEnd = false;
         timer = new Timer(limitTime, GameOver);
-        stageFase = StageFase.GO;
+        StartMode();
+    }
+
+    public void StartMode()
+    {
+        //Thief‚ÌInput‚ð—LŒø‚É
+        isEnd = false;
+    }
+
+    public void StopMode()
+    {
+        //Thief‚ÌInput‚ð–³Œø‚É
+    }
+
+    public bool CheckIsEnd()
+    {
+        return isEnd;
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (stageFase)
+        switch (actionFase)
         {
-            case StageFase.BACK:
-                Debug.Log(timer.GetRemainingTime());
+            case ActionFase.BACK:
                 timer.Update();
+                Debug.Log(timer.GetRemainingTime());
                 break;
         }
     }
@@ -47,7 +66,8 @@ public class Stage : MonoBehaviour
 
     public void FaseChange()
     {
-        stageFase = StageFase.BACK;
+        actionFase = ActionFase.BACK;
         field.FaseChange();
+        characters.FaseChange();
     }
 }

@@ -1,11 +1,11 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MoveFloor : MonoBehaviour, IGimmickObstacle
+public class MoveFloor : GimmickObstacle, IGimmickObstacle
 {
     [SerializeField] Transform beginTransform;
     [SerializeField] Transform endTransform;
-    [SerializeField] GimmickTrigger trigger;
     [SerializeField] float speed;
     [SerializeField] GimmickType type;
     Vector3 moveVec;
@@ -19,8 +19,9 @@ public class MoveFloor : MonoBehaviour, IGimmickObstacle
     // Update is called once per frame
     void Update()
     {
+        ShowHint();
         Move();
-        beginEndPositionPutBack();
+        BeginEndPositionPutBack();
     }
 
     private void Move()
@@ -32,7 +33,7 @@ public class MoveFloor : MonoBehaviour, IGimmickObstacle
         this.transform.position += moveVec;
     }
 
-    private void beginEndPositionPutBack()
+    private void BeginEndPositionPutBack()
     {
         beginTransform.position -= moveVec;
         endTransform.position -= moveVec;
@@ -48,6 +49,19 @@ public class MoveFloor : MonoBehaviour, IGimmickObstacle
     {
         GimmickFuncGenerator.GetInstance().Generate(type)(this.gameObject);
         moveVec = Vector3.zero;
+    }
+
+    public void VisualizeGimmick()
+    {
+        visualizeFlg = true;
+    }
+
+    public void ShowHint()
+    {
+        if (visualizeFlg)
+        {
+
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

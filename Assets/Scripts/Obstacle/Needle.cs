@@ -1,14 +1,15 @@
 using UnityEngine;
 
-public class Needle : MonoBehaviour, IGimmickObstacle
+public class Needle : GimmickObstacle, IGimmickObstacle
 {
     Vector3 basePosition;
-    [SerializeField] GimmickTrigger trigger;
+    [SerializeField] GameObject hintObject;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         basePosition = transform.position;
         trigger.SetInvokeGimmickFunc(InvokeGimmick);
+        hintObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -20,15 +21,28 @@ public class Needle : MonoBehaviour, IGimmickObstacle
     public void FaseChange()
     {
         trigger.Stanby();
-    }
-
-    public void ModeChange()
-    {
-        trigger.Stanby();
+        if (visualizeFlg)
+        {
+            hintObject.SetActive(true);
+        }
     }
 
     public void InvokeGimmick()
     {
         this.transform.position = basePosition + this.transform.up;
+
+    }
+
+    public void VisualizeGimmick()
+    {
+        visualizeFlg = true;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.tag == "Thief")
+        {
+            other.GetComponent<Thief>().Damage();
+        }
     }
 }
