@@ -3,5 +3,5 @@ using UnityEngine;
 
 public interface IGuardMan
 {
-    void Chase(Transform target);
+    void Stanby();
 }

@@ -10,13 +10,13 @@ public class TalkingFaseView : MonoBehaviour
     [SerializeField] TextMeshProUGUI textBox;
     [SerializeField] List<TextMeshProUGUI> choiceList;
     
-    [SerializeField] TalkFaseManager talkFaseManager;
+    [SerializeField] TalkingModeManager talkingModeManager;
     private TalkerLine talkerLine;
     private List<TalkerLine> choices;
+    [SerializeField] Camera uiCamera;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        this.gameObject.SetActive(false);
         
     }
 
@@ -39,28 +39,20 @@ public class TalkingFaseView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        uiCamera.enabled = !talkingModeManager.CheckIsEnd();
         ResetChoiceList();
-        talkerLine = talkFaseManager.GetTalkerLine();
-        choices = talkFaseManager.GetChoices();
+        talkerLine = talkingModeManager.GetTalkerLine();
+        choices = talkingModeManager.GetChoices();
         for(int i = 0; i < choices.Count; i++)
         {
             choiceList[i].gameObject.SetActive(true);
-            if (i == talkFaseManager.GetChoiceId())
+            if (i == talkingModeManager.GetChoiceId())
             {
                 choiceList[i].text = "¨" + choices[i].sentence;
             }
             else choiceList[i].text = choices[i].sentence;
         }
         textBox.text = talkerLine.sentence;
-
-        if (talkFaseManager.CheckIsEnded())
-        {
-            this.gameObject.SetActive(false);
-        }
-        else
-        {
-            this.gameObject.SetActive(true);
-        }
     }
 
     private void OnDisable()

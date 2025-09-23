@@ -1,11 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using TMPro;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 class Choice
 {
@@ -19,22 +14,20 @@ class Choice
     }
 }
 
-public class TalkFaseManager : MonoBehaviour
+public class TalkingModeManager : MonoBehaviour, IGameMode
 {
     [SerializeField] Thief thief;
     private StringReader reader;
+
     private List<Choice> thiefChoices;
     private int choiceId;
+
     private string line;
     private bool isEnd;
     private TalkerLine talkerLine;
     string[] talkers;
 
     private TalkingInput talkingInput;
-    public TalkFaseManager(string stageName)
-    {
-
-    }
 
     private void Start()
     {
@@ -63,27 +56,34 @@ public class TalkFaseManager : MonoBehaviour
             ChangeChoiceId(true);
         };
 
-        talkingInput.Enable();
-        StartTalking("sample");
     }
 
-    public void StartTalking(string talkingFileName)
+    public void LoadTalkingText(string talkingFileName)
     {
-        Debug.Log(Resources.Load<TextAsset>(talkingFileName));
         TextAsset talkingText = Resources.Load<TextAsset>(talkingFileName);
         reader = new StringReader(talkingText.text);
+        line = reader.ReadLine();
+        talkers = line.Split(",");
+    }
+
+    public void StartMode()
+    {
         isEnd = false;
         talkingInput.Enable();
 
-        line = reader.ReadLine();
-        talkers = line.Split(",");
         Next();
+    }
+
+    public void StopMode()
+    {
+        talkingInput.Disable();
+
     }
 
     private void Finish()
     {
         isEnd = true;
-        talkingInput.Disable();
+        StopMode();
     }
 
     public string[] GetTalkers()
@@ -113,6 +113,7 @@ public class TalkFaseManager : MonoBehaviour
 
     private void Next()
     {
+        if (isEnd) return;
         Debug.Log("Next");
         if (reader.Peek() == -1) {
             Finish();
@@ -149,13 +150,13 @@ public class TalkFaseManager : MonoBehaviour
     {
         talkerLine = thiefChoices[choiceId].talkerLine;
         JumpReadLine(thiefChoices[choiceId].tag);
-        Debug.Log(thiefChoices[choiceId].tag);
-        Debug.Log(line);
+        //Debug.Log(thiefChoices[choiceId].tag);
+        //Debug.Log(line);
         thiefChoices.Clear();
         Next();
     }
 
-    public bool CheckIsEnded()
+    public bool CheckIsEnd()
     {
         return isEnd;
     }
@@ -167,7 +168,7 @@ public class TalkFaseManager : MonoBehaviour
         {
             case "@end":
                 Finish();
-                return;
+                break;
             case "@ThiefType":
                 
                 break;
@@ -206,7 +207,6 @@ public class TalkFaseManager : MonoBehaviour
 
     private void JumpReadLine(string talkingTag)
     {
-        //Debug.Log(talkingTag);
         while (line != talkingTag && reader.Peek() != -1)
         {
             line = reader.ReadLine();
