@@ -4,12 +4,13 @@ using UnityEngine.InputSystem;
 
 public class Thief : MonoBehaviour
 {
-    Hp hp;
     Visual visual;
+    ThiefInput thiefInput;
     Rigidbody rigidBody;
     Animator thiefAnimator;
     CapsuleCollider capsuleCollider;
 
+    public Hp hp;
     public int jumpCount = 0;
     public int maxJumpCount = 1;
     public Foot foot;
@@ -17,6 +18,9 @@ public class Thief : MonoBehaviour
     float originalHeight;
     Vector3 originalCenter;
     bool isCrouching = false;
+    bool isSliding = false;
+    float slideTimer = 0f;
+    float slideDuration = 0.5f;
 
     Move move;
 
@@ -24,7 +28,9 @@ public class Thief : MonoBehaviour
     void Start()
     {
         hp = new Hp(3);
-        visual = new Visual(0);
+        thiefInput = new ThiefInput();
+        thiefInput.Enable();
+        visual = new Visual(0,thiefInput);
         rigidBody = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         thiefAnimator = GetComponent<Animator>();
@@ -32,19 +38,31 @@ public class Thief : MonoBehaviour
         originalHeight = capsuleCollider.height;
         originalCenter = capsuleCollider.center;
 
-        move = new Move(rigidBody, jumpCount, maxJumpCount);
+        move = new Move(rigidBody,thiefInput, jumpCount, maxJumpCount);
 
-        ThiefInput thiefInput = new ThiefInput();
-        thiefInput.Enable();
-        //Cでしゃがみ切り替え
-        thiefInput.Move.Crouch.performed += ctx => Crouch();
+       
+        //Cでスライディング・しゃがみ切り替え
+        thiefInput.Move.Crouch.performed += ctx =>
+        {
+            if (move.GetSpeed() > 3f && !isCrouching) Sliding();
+            else Crouch();
+        };
 }
 
-// Update is called once per frame
-void Update()
-     {
+    // Update is called once per frame
+    void Update()
+    {
         move.ApplyMovement();
         jumpCount = move.GetJumpCount();
+        if (isSliding)
+        {
+            slideTimer += Time.deltaTime;
+            if(slideTimer >= slideDuration)
+            {
+                isSliding = false;
+                Crouch();
+            }
+        }
         //向きの切り替え
         float dir = move.GetDirection();
         if (dir > 0) transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -53,6 +71,7 @@ void Update()
         thiefAnimator.SetFloat("speed", move.GetSpeed());
         thiefAnimator.SetInteger("JumpCount", move.GetJumpCount());
         thiefAnimator.SetBool("isCrouching", isCrouching);
+        thiefAnimator.SetBool("isSliding", isSliding);
     }
 
     //着地
@@ -61,6 +80,33 @@ void Update()
         move.OnFootTouchGround();
     }
 
+    //スライディング
+    void Sliding()
+    {
+        isSliding = true;
+        slideTimer = 0f;
+        capsuleCollider.direction = 2;//軸変更
+        capsuleCollider.center = new Vector3(originalCenter.x, originalCenter.y - originalHeight / 4, 0.3f);
+        foot.SetCrouchState(true);
+        Debug.Log("スライディング");
+    }
+
+    /*
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Enemy") && isSliding)
+        {
+            Enemy enemy = other.GetComponent<Enemy>();//敵にEnemyというタグ
+            if(enemy != null)
+            {
+                enemy.Damage();
+                Debug.Log("スライディングヒット");
+            }
+        }
+    }
+    */
+
+    //しゃがみ
     void Crouch()
     {
         //状態を切り替える
@@ -68,14 +114,14 @@ void Update()
 
         if (isCrouching)
         {
-            capsuleCollider.direction = 2;
+            capsuleCollider.direction = 2;//軸変更
             capsuleCollider.center = new Vector3(originalCenter.x, originalCenter.y-originalHeight/4, 0.3f);
             foot.SetCrouchState(true);
             Debug.Log("しゃがみ状態");
         }
         else
         {
-            capsuleCollider.direction = 1;
+            capsuleCollider.direction = 1;//軸変更
             capsuleCollider.center = originalCenter;
             foot.SetCrouchState(false);
             Debug.Log("立ち状態");
@@ -105,9 +151,8 @@ void Update()
         Debug.Log(hp.GetValue());
     }
 
-    void OnDestroy()
+    private void OnDisable()
     {
-        visual.Dispose();
+        thiefInput?.Disable();
     }
-
 }

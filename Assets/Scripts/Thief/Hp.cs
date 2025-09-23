@@ -1,8 +1,10 @@
 using UnityEngine;
+[System.Serializable]
 
 public class Hp
 {
     //•Ï”
+    [SerializeField]
     private int value;
     
     public Hp(int value)
