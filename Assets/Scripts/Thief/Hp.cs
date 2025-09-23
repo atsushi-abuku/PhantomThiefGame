@@ -19,6 +19,10 @@ public class Hp
 
     public Hp SubHp(Hp hp)
     {
+        if(this.value - hp.GetValue() < 0)
+        {
+            return new Hp(0);
+        }
         return new Hp(this.value - hp.GetValue());
     }
 }
