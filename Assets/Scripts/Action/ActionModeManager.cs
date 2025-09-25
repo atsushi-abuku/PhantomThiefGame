@@ -57,7 +57,6 @@ public class ActionModeManager : MonoBehaviour, IGameMode
         {
             case ActionFase.BACK:
                 timer.Update();
-                Debug.Log(timer.GetRemainingTime());
                 break;
         }
     }
