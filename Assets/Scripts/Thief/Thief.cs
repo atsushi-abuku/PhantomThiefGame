@@ -22,6 +22,10 @@ public class Thief : MonoBehaviour
     float slideTimer = 0f;
     float slideDuration = 0.5f;
 
+    bool isInvincible = false;
+    float invincibleTimer = 0f;
+    float invincibleDuration = 3f;//–³“GŠÔ
+
     Move move;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -61,6 +65,16 @@ public class Thief : MonoBehaviour
             {
                 isSliding = false;
                 Crouch();
+            }
+        }
+        //–³“GŠÔ‚ÌƒJƒEƒ“ƒg
+        if (isInvincible)
+        {
+            invincibleTimer += Time.deltaTime;
+            if (invincibleTimer >= invincibleDuration)
+            {
+                isInvincible = false;
+                Debug.Log("–³“GI—¹");
             }
         }
         //Œü‚«‚ÌØ‚è‘Ö‚¦
@@ -146,9 +160,17 @@ public class Thief : MonoBehaviour
 
     public void Damage()
     {
+        if (isInvincible)
+        {
+            Debug.Log("–³“G’†");
+            return;
+        }
         //HP‚ğ1Œ¸‚ç‚·
         hp = hp.SubHp(new Hp(1));
         Debug.Log(hp.GetValue());
+
+        isInvincible = true;
+        invincibleTimer = 0f;
     }
 
     private void OnDisable()
