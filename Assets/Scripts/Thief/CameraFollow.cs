@@ -5,11 +5,11 @@ public class CameraFollow : MonoBehaviour
     public Transform target;
     private float smoothSpeed = 5f;
     public ActionFase actionFase;
+    Vector3 desiredPosition;
 
     void Update()
     {
         if(target == null) return;
-        Vector3 desiredPosition;
         //â°à⁄ìÆí«è]
         if (actionFase == ActionFase.GO)
         {
@@ -23,7 +23,7 @@ public class CameraFollow : MonoBehaviour
         {
             desiredPosition = new Vector3(target.position.x , transform.position.y, transform.position.z);
         }
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
-        transform.position = smoothedPosition;
+        //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
+        transform.position = desiredPosition;
     }
 }

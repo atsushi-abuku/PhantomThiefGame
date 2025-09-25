@@ -31,6 +31,7 @@ public class StageManager : MonoBehaviour
         {
             StopMode();
             modeStack.Pop();
+            modeStack.Peek().StartMode();
         }
     }
 
