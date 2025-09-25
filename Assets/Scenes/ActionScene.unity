@@ -2183,6 +2183,7 @@ MonoBehaviour:
   limitTime: 30
   actionFase: 0
   fieldObjects: {fileID: 701507447}
+  cameraFollow: {fileID: 0}
 --- !u!114 &1811111860
 MonoBehaviour:
   m_ObjectHideFlags: 0
