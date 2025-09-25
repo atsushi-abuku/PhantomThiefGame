@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-enum ActionFase
+public enum ActionFase
 {
     GO,
     BACK
@@ -16,6 +16,7 @@ public class ActionModeManager : MonoBehaviour, IGameMode
     [SerializeField] float limitTime;
     [SerializeField] ActionFase actionFase;
     [SerializeField] GameObject fieldObjects;
+    [SerializeField] CameraFollow cameraFollow;
     private Field field;
     private Characters characters;
     private bool isEnd;
@@ -34,12 +35,14 @@ public class ActionModeManager : MonoBehaviour, IGameMode
     public void StartMode()
     {
         //Thief‚ÌInput‚ð—LŒø‚É
+        thief.EnableInput();
         isEnd = false;
     }
 
     public void StopMode()
     {
         //Thief‚ÌInput‚ð–³Œø‚É
+        thief.DisableInput();
     }
 
     public bool CheckIsEnd()
@@ -69,5 +72,6 @@ public class ActionModeManager : MonoBehaviour, IGameMode
         actionFase = ActionFase.BACK;
         field.FaseChange();
         characters.FaseChange();
+        cameraFollow.actionFase = actionFase;
     }
 }
