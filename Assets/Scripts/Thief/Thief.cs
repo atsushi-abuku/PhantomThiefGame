@@ -158,11 +158,11 @@ public class Thief : MonoBehaviour
 
     public void EnableInput()
     {
-
+        thiefInput?.Enable();
     }
 
     public void DisableInput()
     {
-
+        thiefInput?.Disable();
     }
 }

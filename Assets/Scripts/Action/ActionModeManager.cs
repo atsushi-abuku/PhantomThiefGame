@@ -34,12 +34,14 @@ public class ActionModeManager : MonoBehaviour, IGameMode
     public void StartMode()
     {
         //Thief‚ÌInput‚ð—LŒø‚É
+        thief.EnableInput();
         isEnd = false;
     }
 
     public void StopMode()
     {
         //Thief‚ÌInput‚ð–³Œø‚É
+        thief.DisableInput();
     }
 
     public bool CheckIsEnd()
