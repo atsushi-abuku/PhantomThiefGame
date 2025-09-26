@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class TalkingFaseView : MonoBehaviour
 {
-    GameObject leftTalker;
-    GameObject rightTalker;
+    [SerializeField] Vector3 leftTalkerPosition;
+    [SerializeField] Vector3 rightTalkerPosition;
+
     [SerializeField] TextMeshProUGUI textBox;
     [SerializeField] List<TextMeshProUGUI> choiceList;
     
@@ -14,17 +15,11 @@ public class TalkingFaseView : MonoBehaviour
     private TalkerLine talkerLine;
     private List<TalkerLine> choices;
     [SerializeField] Camera uiCamera;
+    private List<GameObject> talkerModels;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
-    }
-
-    private void OnEnable()
-    {
-        //leftTalker = Resources.Load("Prefabs/" + talkFaseManager.GetTalkers()[0]) as GameObject;
-        //rightTalker = Resources.Load("Prefabs/" + talkFaseManager.GetTalkers()[1]) as GameObject;
-
+        talkerModels = new List<GameObject>();
     }
 
     private void ResetChoiceList()
@@ -36,10 +31,30 @@ public class TalkingFaseView : MonoBehaviour
         }
     }
 
+    private void UpdateTalkerModels()
+    {
+        if(talkerModels.Count == 0)
+        {
+            string[] talkerNames = talkingModeManager.GetTalkers();
+            foreach (string name in talkerNames)
+            {
+                talkerModels.Add(Resources.Load("Prefabs/TalkerModels" + name) as GameObject);
+            }
+        }
+        //talkerModels[0].transform.position = leftTalkerPosition;
+        //talkerModels[1].transform.position = rightTalkerPosition;
+    }
+
     // Update is called once per frame
     void Update()
     {
         uiCamera.enabled = !talkingModeManager.CheckIsEnd();
+        if (!uiCamera.enabled)
+        {
+            talkerModels.Clear();
+            return;
+        }
+        UpdateTalkerModels();
         ResetChoiceList();
         talkerLine = talkingModeManager.GetTalkerLine();
         choices = talkingModeManager.GetChoices();

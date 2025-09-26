@@ -63,6 +63,7 @@ public class ActionModeManager : MonoBehaviour, IGameMode
 
     public void GameOver()
     {
+        isEnd = true;
         Debug.Log("gameover");
     }
 
