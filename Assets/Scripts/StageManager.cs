@@ -41,6 +41,13 @@ public class StageManager : MonoBehaviour
         actionModeManager.StopMode();
     }
 
+    public void ModeChangeTalking(ITalker talker)
+    {
+        StopMode();
+        talkingModeManager.SetTalkingPartner(talker);
+        ModeChangeTalking();
+    }
+
     public void ModeChangeTalking(string talkingFileName)
     {
         talkingModeManager.LoadTalkingText(talkingFileName);
@@ -52,7 +59,6 @@ public class StageManager : MonoBehaviour
         StopMode();
         talkingModeManager.StartMode();
         modeStack.Push(talkingModeManager);
-        Debug.Log(modeStack.Count);
     }
 
     public void ModeChangeAction()

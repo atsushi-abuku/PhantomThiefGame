@@ -25,6 +25,7 @@ public class Citizen : MonoBehaviour, ITalker
     {
         if (isTalkabled)
         {
+            StageManager.GetInstance().ModeChangeTalking(this);
         }
     }
 
@@ -41,14 +42,25 @@ public class Citizen : MonoBehaviour, ITalker
         gameObject.SetActive(false);
     }
 
+    public string GetTalkingFileName()
+    {
+        return TextFileName;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        StageManager.GetInstance().ModeChangeTalking(TextFileName);
-        isTalkabled = true;
+        if(other.GetComponent<Thief>() != null)
+        {
+            other.GetComponent<Thief>().thiefTalker.SetTalkableCharacter(this);
+            isTalkabled = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        isTalkabled = false;
+        if (other.GetComponent<Thief>() != null)
+        {
+            isTalkabled = false;
+        }
     }
 }

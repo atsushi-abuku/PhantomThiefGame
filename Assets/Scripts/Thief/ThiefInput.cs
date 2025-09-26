@@ -222,6 +222,34 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Talk"",
+            ""id"": ""f129be5b-8c11-4915-ab7a-caf881fad224"",
+            ""actions"": [
+                {
+                    ""name"": ""Talk"",
+                    ""type"": ""Button"",
+                    ""id"": ""110198cf-7d41-435c-b568-b07784594b20"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""20940004-77bf-44bf-a0e8-4c1fb0ec65a2"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Talk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -236,12 +264,16 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
         // Visual
         m_Visual = asset.FindActionMap("Visual", throwIfNotFound: true);
         m_Visual_Change = m_Visual.FindAction("Change", throwIfNotFound: true);
+        // Talk
+        m_Talk = asset.FindActionMap("Talk", throwIfNotFound: true);
+        m_Talk_Talk = m_Talk.FindAction("Talk", throwIfNotFound: true);
     }
 
     ~@ThiefInput()
     {
         UnityEngine.Debug.Assert(!m_Move.enabled, "This will cause a leak and performance issues, ThiefInput.Move.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Visual.enabled, "This will cause a leak and performance issues, ThiefInput.Visual.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Talk.enabled, "This will cause a leak and performance issues, ThiefInput.Talk.Disable() has not been called.");
     }
 
     /// <summary>
@@ -549,6 +581,102 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="VisualActions" /> instance referencing this action map.
     /// </summary>
     public VisualActions @Visual => new VisualActions(this);
+
+    // Talk
+    private readonly InputActionMap m_Talk;
+    private List<ITalkActions> m_TalkActionsCallbackInterfaces = new List<ITalkActions>();
+    private readonly InputAction m_Talk_Talk;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Talk".
+    /// </summary>
+    public struct TalkActions
+    {
+        private @ThiefInput m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public TalkActions(@ThiefInput wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Talk/Talk".
+        /// </summary>
+        public InputAction @Talk => m_Wrapper.m_Talk_Talk;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Talk; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="TalkActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(TalkActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="TalkActions" />
+        public void AddCallbacks(ITalkActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TalkActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TalkActionsCallbackInterfaces.Add(instance);
+            @Talk.started += instance.OnTalk;
+            @Talk.performed += instance.OnTalk;
+            @Talk.canceled += instance.OnTalk;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="TalkActions" />
+        private void UnregisterCallbacks(ITalkActions instance)
+        {
+            @Talk.started -= instance.OnTalk;
+            @Talk.performed -= instance.OnTalk;
+            @Talk.canceled -= instance.OnTalk;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="TalkActions.UnregisterCallbacks(ITalkActions)" />.
+        /// </summary>
+        /// <seealso cref="TalkActions.UnregisterCallbacks(ITalkActions)" />
+        public void RemoveCallbacks(ITalkActions instance)
+        {
+            if (m_Wrapper.m_TalkActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="TalkActions.AddCallbacks(ITalkActions)" />
+        /// <seealso cref="TalkActions.RemoveCallbacks(ITalkActions)" />
+        /// <seealso cref="TalkActions.UnregisterCallbacks(ITalkActions)" />
+        public void SetCallbacks(ITalkActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TalkActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TalkActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="TalkActions" /> instance referencing this action map.
+    /// </summary>
+    public TalkActions @Talk => new TalkActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Move" which allows adding and removing callbacks.
     /// </summary>
@@ -606,5 +734,20 @@ public partial class @ThiefInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnChange(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Talk" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="TalkActions.AddCallbacks(ITalkActions)" />
+    /// <seealso cref="TalkActions.RemoveCallbacks(ITalkActions)" />
+    public interface ITalkActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Talk" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTalk(InputAction.CallbackContext context);
     }
 }

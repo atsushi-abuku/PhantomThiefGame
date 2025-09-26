@@ -27,6 +27,7 @@ public class Thief : MonoBehaviour
     float invincibleDuration = 3f;//無敵時間
 
     Move move;
+    public ThiefTalker thiefTalker;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -43,6 +44,7 @@ public class Thief : MonoBehaviour
         originalCenter = capsuleCollider.center;
 
         move = new Move(rigidBody,thiefInput, jumpCount, maxJumpCount);
+        thiefTalker = new ThiefTalker(thiefInput);
 
        
         //Cでスライディング・しゃがみ切り替え

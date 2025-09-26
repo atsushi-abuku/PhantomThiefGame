@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 class Choice
 {
@@ -17,6 +18,8 @@ class Choice
 public class TalkingModeManager : MonoBehaviour, IGameMode
 {
     [SerializeField] Thief thief;
+    private ITalker talker;
+    private string[] talkerNames;
     private StringReader reader;
 
     private List<Choice> thiefChoices;
@@ -25,7 +28,6 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
     private string line;
     private bool isEnd;
     private TalkerLine talkerLine;
-    string[] talkers;
 
     private TalkingInput talkingInput;
 
@@ -63,7 +65,13 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
         TextAsset talkingText = Resources.Load<TextAsset>(talkingFileName);
         reader = new StringReader(talkingText.text);
         line = reader.ReadLine();
-        talkers = line.Split(",");
+        talkerNames = line.Split(',');
+    }
+
+    public void SetTalkingPartner(ITalker talker)
+    {
+        this.talker = talker;
+        LoadTalkingText(talker.GetTalkingFileName());
     }
 
     public void StartMode()
@@ -84,11 +92,12 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
     {
         isEnd = true;
         StopMode();
+        this.talker = null;
     }
 
     public string[] GetTalkers()
     {
-        return talkers;
+        return talkerNames;
     }
 
     public TalkerLine GetTalkerLine()
@@ -170,7 +179,8 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
                 Finish();
                 break;
             case "@ThiefType":
-                
+                //thiefÇÃvisualÇ∆talkingTag[1]Ç™àÍèèÇ©Ç«Ç§Ç©ämîF
+                //àÍèèÇ»ÇÁtalkingTag[2]Ç…îÚÇ‘
                 break;
             case "@choice":
                 line = reader.ReadLine();
@@ -186,6 +196,9 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
             case "@jump":
                 JumpReadLine(talkingTag[1]);
                 Next();
+                break;
+            case "@teachGimmick":
+                if(talker != null) talker.TeachGimmick();
                 break;
             default:
                 Next();

@@ -8,4 +8,6 @@ public interface ITalker
     void TeachGimmick();
 
     void DisableTalk();
+
+    string GetTalkingFileName();
 }
