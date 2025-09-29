@@ -39,6 +39,8 @@ public class Citizen : MonoBehaviour, ITalker
 
     public void DisableTalk()
     {
+        isTalkabled = false;
+        GetComponent<SphereCollider>().enabled = false;
         gameObject.SetActive(false);
     }
 

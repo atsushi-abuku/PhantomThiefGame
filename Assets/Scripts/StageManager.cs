@@ -27,6 +27,7 @@ public class StageManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (modeStack.Count == 0) return;
         if (modeStack.Peek().CheckIsEnd())
         {
             StopMode();
