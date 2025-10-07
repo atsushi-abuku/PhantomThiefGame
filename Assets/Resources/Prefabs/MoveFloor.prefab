@@ -156,9 +156,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a0f9727d3b3de4a97dadc847224a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trigger: {fileID: 5028061670869609486}
   beginTransform: {fileID: 839958585897336656}
   endTransform: {fileID: 8345424804007044781}
-  trigger: {fileID: 5028061670869609486}
   speed: 1
   type: 1
 --- !u!54 &-1726539212094848314
