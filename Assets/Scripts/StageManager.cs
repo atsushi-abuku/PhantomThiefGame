@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Timeline.AnimationPlayableAsset;
-
 public class StageManager : MonoBehaviour
 {
     Stack<IGameMode> modeStack;
