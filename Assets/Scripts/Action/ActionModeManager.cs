@@ -27,6 +27,7 @@ public class ActionModeManager : MonoBehaviour, IGameMode
         field = new Field(fieldObjects);
         characters = new Characters(fieldObjects);
         field.SetTreasureFunc(FaseChange);
+        field.SetExitFunc(GameClear);
         isEnd = false;
         timer = new Timer(limitTime, GameOver);
         StartMode();
@@ -65,6 +66,12 @@ public class ActionModeManager : MonoBehaviour, IGameMode
     {
         isEnd = true;
         Debug.Log("gameover");
+    }
+
+    public void GameClear()
+    {
+        isEnd = true;
+        Debug.Log("gameclear");
     }
 
     public void FaseChange()
