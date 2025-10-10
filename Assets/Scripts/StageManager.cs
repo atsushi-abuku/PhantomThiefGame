@@ -31,7 +31,7 @@ public class StageManager : MonoBehaviour
         {
             StopMode();
             modeStack.Pop();
-            modeStack.Peek().StartMode();
+            if (modeStack.Count > 0) modeStack.Peek().StartMode();
         }
     }
 
@@ -43,7 +43,6 @@ public class StageManager : MonoBehaviour
 
     public void ModeChangeTalking(ITalker talker)
     {
-        StopMode();
         talkingModeManager.SetTalkingPartner(talker);
         ModeChangeTalking();
     }
