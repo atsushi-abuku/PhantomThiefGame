@@ -66,5 +66,8 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj",
     },
-    "dotnet.defaultSolution": "PhantomThiefGame.sln"
+    "dotnet.defaultSolution": "PhantomThiefGame.sln",
+    // ✅ 文字化け対策
+    "files.encoding": "utf8",
+    "files.autoGuessEncoding": true
 }
