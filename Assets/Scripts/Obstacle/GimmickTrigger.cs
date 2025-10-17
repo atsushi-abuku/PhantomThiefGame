@@ -10,7 +10,7 @@ public class GimmickTrigger : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        this.GetComponent<SphereCollider>().enabled = true;
+        this.GetComponent<SphereCollider>().enabled = true; //もとはfalse
     }
 
     // Update is called once per frame
@@ -32,7 +32,7 @@ public class GimmickTrigger : MonoBehaviour
     {
         if (other.tag == "Thief")
         {
-            Debug.Log("hiit");
+            //Debug.Log("hiit");
             invokeGimmickFunc();
         }
     }
