@@ -181,6 +181,10 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
             case "@ThiefType":
                 //thiefのvisualとtalkingTag[1]が一緒かどうか確認
                 //一緒ならtalkingTag[2]に飛ぶ
+                /*if(thief.GetVisual() == talkingTag[1])
+                {
+                    JumpReadLine(talkingTag[2]);
+                }*/
                 break;
             case "@choice":
                 line = reader.ReadLine();
@@ -191,7 +195,7 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
                 }
                 break;
             case "@eventFlg":
-
+                //ステージのeventFlgを立てる(使わないかも)
                 break;
             case "@jump":
                 JumpReadLine(talkingTag[1]);
