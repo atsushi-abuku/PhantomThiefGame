@@ -1,4 +1,5 @@
 Thief,GuardMan
+@ThiefType GuardMan @negirai
 GuardMan,smile,こんにちは
 @choice
 Thief,smile,こんにちは @normal
@@ -17,3 +18,4 @@ GuardMan,normal,ここからは立ち入り禁止ですよ．
 @negirai
 GuardMan,normal,ご苦労様です．
 @end
+

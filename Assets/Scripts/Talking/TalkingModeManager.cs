@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -179,12 +180,16 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
                 Finish();
                 break;
             case "@ThiefType":
-                //thief‚Ìvisual‚ÆtalkingTag[1]‚ªˆê‚©‚Ç‚¤‚©Šm”F
-                //ˆê‚È‚çtalkingTag[2]‚É”ò‚Ô
-                /*if(thief.GetVisual() == talkingTag[1])
+                String currentVisual = thief.GetVisualType().ToString();
+                if (talkingTag[1] == currentVisual)
                 {
                     JumpReadLine(talkingTag[2]);
-                }*/
+                    Next();
+                }
+                else
+                {
+                    Next();
+                }
                 break;
             case "@choice":
                 line = reader.ReadLine();
