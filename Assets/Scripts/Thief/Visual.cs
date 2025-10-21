@@ -33,4 +33,9 @@ public class Visual
         visual = (visual + 1) % visuals.Count;
         Debug.Log("Žp" +  (VisualType)visual);
     }
+
+    public VisualType GetCurrentVisualType()
+    {
+        return (VisualType)visual;
+    }
 }

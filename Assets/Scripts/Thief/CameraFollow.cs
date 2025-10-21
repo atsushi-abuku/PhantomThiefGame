@@ -3,7 +3,7 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public Transform target;
-    private float smoothSpeed = 5f;
+    //private float smoothSpeed = 5f;
     public ActionFase actionFase;
     Vector3 desiredPosition;
 

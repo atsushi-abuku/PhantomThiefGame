@@ -58,7 +58,7 @@ public class Move
         {
             isDashPressed = false;
             if (jumpCount == 0)
-            { moveSpeed = moveSpeed.SubSpeed(new MoveSpeed(2f)); Debug.Log("motoni"); }
+                moveSpeed = moveSpeed.SubSpeed(new MoveSpeed(2f)); 
         };
         //Space‚ÅƒWƒƒƒ“ƒv    
         thiefInput.Move.Jump.started += Jump;

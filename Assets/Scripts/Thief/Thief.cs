@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -173,7 +175,15 @@ public class Thief : MonoBehaviour
         invincibleTimer = 0f;
     }
 
-    private void OnDisable()
+    //Œ»İ‚Ìp‚ğ“¾‚é
+    public VisualType GetVisualType()
+    {
+        return visual.GetCurrentVisualType();
+    }
+
+  
+
+private void OnDisable()
     {
         thiefInput?.Disable();
     }
