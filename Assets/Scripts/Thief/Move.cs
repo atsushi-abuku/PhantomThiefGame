@@ -10,7 +10,7 @@ public class Move
     private float moveDirection = 0;
     private MoveSpeed moveSpeed;
 
-    int jumpCount;
+    private int jumpCount = 0;
     int maxJumpCount;
 
     private bool isRightPressed = false;
@@ -18,11 +18,10 @@ public class Move
     private bool isDashPressed = false;
     private bool isStuck = false;
 
-    public Move(Rigidbody rb,ThiefInput input, int jumpCount, int maxJumpCount)
+    public Move(Rigidbody rb,ThiefInput input, int maxJumpCount)
     {
         rigidBody = rb;
         thiefInput = input;
-        this.jumpCount = jumpCount;
         this.maxJumpCount = maxJumpCount;
         velocity = rigidBody.linearVelocity;
         moveSpeed = new MoveSpeed(2f);
@@ -59,7 +58,7 @@ public class Move
         {
             isDashPressed = false;
             if (jumpCount == 0)
-                moveSpeed = moveSpeed.SubSpeed(new MoveSpeed(2f));
+                moveSpeed = moveSpeed.SubSpeed(new MoveSpeed(2f)); 
         };
         //Space‚ÅƒWƒƒƒ“ƒv    
         thiefInput.Move.Jump.started += Jump;
@@ -86,7 +85,8 @@ public class Move
         if (!isRightPressed && !isLeftPressed)
             moveDirection = 0f;
         if (!isDashPressed)
-            moveSpeed = moveSpeed.Set(2f);
+        moveSpeed = moveSpeed.Set(2f);
+
     }
 
 

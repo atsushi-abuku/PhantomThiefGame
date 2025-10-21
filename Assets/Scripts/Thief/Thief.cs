@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -11,7 +13,6 @@ public class Thief : MonoBehaviour
     CapsuleCollider capsuleCollider;
 
     public Hp hp;
-    public int jumpCount = 0;
     public int maxJumpCount = 1;
     public Foot foot;
 
@@ -43,7 +44,7 @@ public class Thief : MonoBehaviour
         originalHeight = capsuleCollider.height;
         originalCenter = capsuleCollider.center;
 
-        move = new Move(rigidBody,thiefInput, jumpCount, maxJumpCount);
+        move = new Move(rigidBody,thiefInput, maxJumpCount);
         thiefTalker = new ThiefTalker(thiefInput);
 
        
@@ -59,7 +60,6 @@ public class Thief : MonoBehaviour
     void Update()
     {
         move.ApplyMovement();
-        jumpCount = move.GetJumpCount();
         if (isSliding)
         {
             slideTimer += Time.deltaTime;
@@ -175,7 +175,15 @@ public class Thief : MonoBehaviour
         invincibleTimer = 0f;
     }
 
-    private void OnDisable()
+    //åªç›ÇÃépÇìæÇÈ
+    public VisualType GetVisualType()
+    {
+        return visual.GetCurrentVisualType();
+    }
+
+  
+
+private void OnDisable()
     {
         thiefInput?.Disable();
     }
