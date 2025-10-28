@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Citizen : MonoBehaviour, ITalker
 {
+    [SerializeField] private int id;
     [SerializeField] List<IGimmickObstacle> gimmickObstacles;
     private bool isTalkabled;
     [SerializeField] string TextFileName;
@@ -63,6 +64,13 @@ public class Citizen : MonoBehaviour, ITalker
         if (other.GetComponent<Thief>() != null)
         {
             isTalkabled = false;
+        }
+    }
+    public void SetGimmickObstacle(GimmickObstacle gimmickObstacle)
+    {
+        if(gimmickObstacle.GetTakerId() == id)
+        {
+            if (gimmickObstacle.GetComponent<IGimmickObstacle>() != null) gimmickObstacles.Add(gimmickObstacle.GetComponent<IGimmickObstacle>());
         }
     }
 }
