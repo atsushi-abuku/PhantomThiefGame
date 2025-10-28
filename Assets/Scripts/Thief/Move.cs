@@ -6,6 +6,7 @@ public class Move
     Rigidbody rigidBody;
     Vector3 velocity;
     ThiefInput thiefInput;
+    Animator animator;
 
     private float moveDirection = 0;
     private MoveSpeed moveSpeed;
@@ -18,11 +19,12 @@ public class Move
     private bool isDashPressed = false;
     private bool isStuck = false;
 
-    public Move(Rigidbody rb,ThiefInput input, int maxJumpCount)
+    public Move(Rigidbody rb,ThiefInput input, int maxJumpCount, Animator animator)
     {
         rigidBody = rb;
         thiefInput = input;
         this.maxJumpCount = maxJumpCount;
+        this.animator = animator;
         velocity = rigidBody.linearVelocity;
         moveSpeed = new MoveSpeed(2f);
 
@@ -71,9 +73,11 @@ public class Move
         if (jumpCount < maxJumpCount)
         {
             velocity = rigidBody.linearVelocity;
-            velocity.y = 5;
+            velocity.y = 6;
             rigidBody.linearVelocity = velocity;
             jumpCount++;
+            //アニメーションを開始
+            animator.SetTrigger("JumpPressed");
         }
     }
     //着地
