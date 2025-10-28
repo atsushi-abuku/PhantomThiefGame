@@ -44,7 +44,7 @@ public class Thief : MonoBehaviour
         originalHeight = capsuleCollider.height;
         originalCenter = capsuleCollider.center;
 
-        move = new Move(rigidBody,thiefInput, maxJumpCount);
+        move = new Move(rigidBody,thiefInput, maxJumpCount, thiefAnimator);
         thiefTalker = new ThiefTalker(thiefInput);
 
        
@@ -86,6 +86,7 @@ public class Thief : MonoBehaviour
         //アニメーション
         thiefAnimator.SetFloat("speed", move.GetSpeed());
         thiefAnimator.SetInteger("JumpCount", move.GetJumpCount());
+        thiefAnimator.SetFloat("VerticalSpeed", rigidBody.linearVelocity.y);
         thiefAnimator.SetBool("isCrouching", isCrouching);
         thiefAnimator.SetBool("isSliding", isSliding);
     }
