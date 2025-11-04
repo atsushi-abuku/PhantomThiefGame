@@ -76,7 +76,7 @@ public class Thief : MonoBehaviour
             if (invincibleTimer >= invincibleDuration)
             {
                 isInvincible = false;
-                Debug.Log("–³“GI—¹");
+                Debug.Log("Im No Longer Invincible");
             }
         }
         //Œü‚«‚ÌØ‚è‘Ö‚¦
@@ -164,10 +164,10 @@ public class Thief : MonoBehaviour
     {
         if (isInvincible)
         {
-            Debug.Log("–³“G’†");
+            Debug.Log("Im Invincible");
             return;
         }
-        //HP‚ğ1Œ¸‚ç‚·
+        //HP - 1
         hp = hp.SubHp(new Hp(1));
         Debug.Log(hp.GetValue());
 
