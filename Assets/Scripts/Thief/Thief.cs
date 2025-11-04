@@ -21,7 +21,7 @@ public class Thief : MonoBehaviour
     bool isCrouching = false;
     bool isSliding = false;
     float slideTimer = 0f;
-    float slideDuration = 0.5f;
+    float slideDuration = 0.3f;
 
     bool isInvincible = false;
     float invincibleTimer = 0f;
@@ -88,7 +88,7 @@ public class Thief : MonoBehaviour
         thiefAnimator.SetInteger("JumpCount", move.GetJumpCount());
         thiefAnimator.SetFloat("VerticalSpeed", rigidBody.linearVelocity.y);
         thiefAnimator.SetBool("isCrouching", isCrouching);
-        thiefAnimator.SetBool("isSliding", isSliding);
+        thiefAnimator.SetBool("isSlidingb", isSliding);
     }
 
     //着地
@@ -105,6 +105,7 @@ public class Thief : MonoBehaviour
         capsuleCollider.direction = 2;//軸変更
         capsuleCollider.center = new Vector3(originalCenter.x, originalCenter.y - originalHeight / 4, 0.3f);
         foot.SetCrouchState(true);
+        //thiefAnimator.SetTrigger("isSliding");
         Debug.Log("スライディング");
     }
 
