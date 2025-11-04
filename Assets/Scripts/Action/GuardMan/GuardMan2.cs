@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class GuardMan2 : MonoBehaviour
 {
     public Transform player;
-    //public Transform[] patrolPoints;    //Patrol point
+    public Transform[] patrolPoints;    //Patrol point
     public float patrolSpeed = 2f;
     public float patrolDistance = 3f;
     public float detectionRange = 3f;   //Enemy sight
@@ -28,11 +28,12 @@ public class GuardMan2 : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
         startPos = transform.position;
     }
 
     // Update is called once per frame
-    [System.Obsolete]
+
     void Update()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
@@ -76,11 +77,10 @@ public class GuardMan2 : MonoBehaviour
 
     }
 
-    [System.Obsolete]
     void  Stanby()
     {
         float move = movingRight ? 1 : -1;
-        rb.velocity = new Vector2(move * patrolSpeed, rb.velocity.y);
+        rb.linearVelocity = new Vector3(move * patrolSpeed, rb. linearVelocity.x);
 
         // パトロール範囲の端で方向転換
         if (movingRight && transform.position.x > startPos.x + patrolDistance)
@@ -88,21 +88,18 @@ public class GuardMan2 : MonoBehaviour
         else if (!movingRight && transform.position.x < startPos.x - patrolDistance)
             movingRight = true;
 
-        transform.localScale = new Vector3(movingRight ? 1 : -1, 1, 1);
     }
 
     void GoToNextPatrolPoint()
     {
         float move = movingRight ? 1 : -1;
-        rb.linearVelocity = new Vector2(move * patrolSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector3(move * patrolSpeed, rb.linearVelocity.x);
 
         // パトロール範囲の端で方向転換
         if (movingRight && transform.position.x > startPos.x + patrolDistance)
             movingRight = false;
         else if (!movingRight && transform.position.x < startPos.x - patrolDistance)
             movingRight = true;
-
-        transform.localScale = new Vector3(movingRight ? 1 : -1, 1, 1);
     }
 
     void Chase()
