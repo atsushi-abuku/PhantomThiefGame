@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,8 @@ public class Thief : MonoBehaviour
     Rigidbody rigidBody;
     Animator thiefAnimator;
     CapsuleCollider capsuleCollider;
+    //AudioSource audioSource;
+    //AudioClip clip;
 
     public Hp hp;
     public int maxJumpCount = 1;
