@@ -81,8 +81,11 @@ public class Thief : MonoBehaviour
         }
         //向きの切り替え
         float dir = move.GetDirection();
-        if (dir > 0) transform.rotation = Quaternion.Euler(0, 90, 0);
+        if (dir>0 && isSliding == true) transform.rotation = Quaternion.Euler(0, 120, 0);
+        else if (dir<0 && isSliding == true) transform.rotation = Quaternion.Euler(0, 290, 0);
+        else if (dir > 0) transform.rotation = Quaternion.Euler(0, 90, 0);
         else if (dir < 0) transform.rotation = Quaternion.Euler(0, 270, 0);
+        
         //アニメーション
         thiefAnimator.SetFloat("speed", move.GetSpeed());
         thiefAnimator.SetInteger("JumpCount", move.GetJumpCount());
