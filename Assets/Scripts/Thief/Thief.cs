@@ -81,11 +81,25 @@ public class Thief : MonoBehaviour
         }
         //向きの切り替え
         float dir = move.GetDirection();
-        if (dir>0 && isSliding == true) transform.rotation = Quaternion.Euler(0, 120, 0);
-        else if (dir<0 && isSliding == true) transform.rotation = Quaternion.Euler(0, 290, 0);
-        else if (dir > 0) transform.rotation = Quaternion.Euler(0, 90, 0);
-        else if (dir < 0) transform.rotation = Quaternion.Euler(0, 270, 0);
-        
+        if (dir>0 && isSliding) 
+            transform.rotation = Quaternion.Euler(0, 120, 0);
+        else if (dir<0 && isSliding) 
+            transform.rotation = Quaternion.Euler(0, 290, 0);
+
+        else if (dir > 0 && isCrouching)
+            transform.rotation = Quaternion.Euler(90, 90, 0);
+        else if (dir < 0 && isCrouching)
+            transform.rotation = Quaternion.Euler(90, 90, 180);
+       // else if (isCrouching)
+       //     transform.rotation = Quaternion.Euler(90, 90, 0);
+
+        else if (dir > 0)
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+        else if (dir < 0)
+            transform.rotation = Quaternion.Euler(0, 270, 0);
+      //  else if (!isCrouching)
+      //      transform.rotation = Quaternion.Euler(0, 90, 0);
+
         //アニメーション
         thiefAnimator.SetFloat("speed", move.GetSpeed());
         thiefAnimator.SetInteger("JumpCount", move.GetJumpCount());
@@ -133,22 +147,25 @@ public class Thief : MonoBehaviour
         //状態を切り替える
         isCrouching = !isCrouching;
 
-        if (isCrouching)
+        if ((isCrouching))
         {
-            capsuleCollider.direction = 2;//軸変更
-            capsuleCollider.center = new Vector3(originalCenter.x, originalCenter.y-originalHeight/4, 0.3f);
+            capsuleCollider.direction = 1;//軸変更
+            capsuleCollider.center = originalCenter;
             foot.SetCrouchState(true);
+                transform.rotation = Quaternion.Euler(90, 90, 0);
             Debug.Log("しゃがみ状態");
         }
+        //立ち
         else
         {
             capsuleCollider.direction = 1;//軸変更
             capsuleCollider.center = originalCenter;
             foot.SetCrouchState(false);
+            transform.rotation = Quaternion.Euler(0, 90, 0);
             Debug.Log("立ち状態");
         }
     }
-
+   
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Wall"))
