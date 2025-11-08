@@ -54,13 +54,16 @@ public class Move
         thiefInput.Move.Dash.performed += ctx => 
         {
             isDashPressed = true;
-            moveSpeed = moveSpeed.AddSpeed(new MoveSpeed(2f));
+            //地上
+            if (jumpCount == 0)
+                moveSpeed = moveSpeed.AddSpeed(new MoveSpeed(2f));
         };
         thiefInput.Move.Dash.canceled += ctx => 
         {
             isDashPressed = false;
+            //地上
             if (jumpCount == 0)
-                moveSpeed = moveSpeed.SubSpeed(new MoveSpeed(2f)); 
+                moveSpeed = moveSpeed.SubSpeed(new MoveSpeed(2f));
         };
         //Spaceでジャンプ    
         thiefInput.Move.Jump.started += Jump;

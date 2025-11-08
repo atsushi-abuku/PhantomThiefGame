@@ -2492,7 +2492,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp:
     value: 0
-  jumpCount: 0
   maxJumpCount: 1
   foot: {fileID: 1245146191}
 --- !u!4 &1938072455 stripped
