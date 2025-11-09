@@ -12,6 +12,7 @@ public class Thief : MonoBehaviour
     Rigidbody rigidBody;
     Animator thiefAnimator;
     CapsuleCollider capsuleCollider;
+    ThiefAudio thiefAudio;
     //AudioSource audioSource;
     //AudioClip clip;
 
@@ -36,10 +37,11 @@ public class Thief : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        thiefAudio = GetComponent<ThiefAudio>();
         hp = new Hp(3);
         thiefInput = new ThiefInput();
         thiefInput.Enable();
-        visual = new Visual(0,thiefInput);
+        visual = new Visual(0,thiefInput, thiefAudio);
         rigidBody = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         thiefAnimator = GetComponent<Animator>();
@@ -47,7 +49,7 @@ public class Thief : MonoBehaviour
         originalHeight = capsuleCollider.height;
         originalCenter = capsuleCollider.center;
 
-        move = new Move(rigidBody,thiefInput, maxJumpCount, thiefAnimator);
+        move = new Move(rigidBody,thiefInput, maxJumpCount, thiefAnimator, thiefAudio);
         thiefTalker = new ThiefTalker(thiefInput);
 
        
@@ -93,15 +95,11 @@ public class Thief : MonoBehaviour
             transform.rotation = Quaternion.Euler(90, 90, 0);
         else if (dir < 0 && isCrouching)
             transform.rotation = Quaternion.Euler(90, 90, 180);
-       // else if (isCrouching)
-       //     transform.rotation = Quaternion.Euler(90, 90, 0);
 
         else if (dir > 0)
             transform.rotation = Quaternion.Euler(0, 90, 0);
         else if (dir < 0)
             transform.rotation = Quaternion.Euler(0, 270, 0);
-      //  else if (!isCrouching)
-      //      transform.rotation = Quaternion.Euler(0, 90, 0);
 
         //アニメーション
         thiefAnimator.SetFloat("speed", move.GetSpeed());
@@ -125,7 +123,7 @@ public class Thief : MonoBehaviour
         capsuleCollider.direction = 2;//軸変更
         capsuleCollider.center = new Vector3(originalCenter.x, originalCenter.y - originalHeight / 4, 0.3f);
         foot.SetCrouchState(true);
-        //thiefAnimator.SetTrigger("isSliding");
+        thiefAudio.PlaySliding();
         Debug.Log("スライディング");
     }
 
@@ -149,6 +147,7 @@ public class Thief : MonoBehaviour
     {
         //状態を切り替える
         isCrouching = !isCrouching;
+        thiefAudio.PlayCrouch();
 
         if ((isCrouching))
         {
