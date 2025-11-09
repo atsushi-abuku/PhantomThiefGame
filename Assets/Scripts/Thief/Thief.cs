@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,9 @@ public class Thief : MonoBehaviour
     Rigidbody rigidBody;
     Animator thiefAnimator;
     CapsuleCollider capsuleCollider;
+    ThiefAudio thiefAudio;
+    //AudioSource audioSource;
+    //AudioClip clip;
 
     public Hp hp;
     public int maxJumpCount = 1;
@@ -21,7 +25,7 @@ public class Thief : MonoBehaviour
     bool isCrouching = false;
     bool isSliding = false;
     float slideTimer = 0f;
-    float slideDuration = 0.5f;
+    float slideDuration = 0.3f;
 
     bool isInvincible = false;
     float invincibleTimer = 0f;
@@ -33,10 +37,11 @@ public class Thief : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        thiefAudio = GetComponent<ThiefAudio>();
         hp = new Hp(3);
         thiefInput = new ThiefInput();
         thiefInput.Enable();
-        visual = new Visual(0,thiefInput);
+        visual = new Visual(0,thiefInput, thiefAudio);
         rigidBody = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         thiefAnimator = GetComponent<Animator>();
@@ -44,7 +49,7 @@ public class Thief : MonoBehaviour
         originalHeight = capsuleCollider.height;
         originalCenter = capsuleCollider.center;
 
-        move = new Move(rigidBody,thiefInput, maxJumpCount, thiefAnimator);
+        move = new Move(rigidBody,thiefInput, maxJumpCount, thiefAnimator, thiefAudio);
         thiefTalker = new ThiefTalker(thiefInput);
 
        
@@ -81,14 +86,27 @@ public class Thief : MonoBehaviour
         }
         //向きの切り替え
         float dir = move.GetDirection();
-        if (dir > 0) transform.rotation = Quaternion.Euler(0, 90, 0);
-        else if (dir < 0) transform.rotation = Quaternion.Euler(0, 270, 0);
+        if (dir>0 && isSliding) 
+            transform.rotation = Quaternion.Euler(0, 120, 0);
+        else if (dir<0 && isSliding) 
+            transform.rotation = Quaternion.Euler(0, 290, 0);
+
+        else if (dir > 0 && isCrouching)
+            transform.rotation = Quaternion.Euler(90, 90, 0);
+        else if (dir < 0 && isCrouching)
+            transform.rotation = Quaternion.Euler(90, 90, 180);
+
+        else if (dir > 0)
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+        else if (dir < 0)
+            transform.rotation = Quaternion.Euler(0, 270, 0);
+
         //アニメーション
         thiefAnimator.SetFloat("speed", move.GetSpeed());
         thiefAnimator.SetInteger("JumpCount", move.GetJumpCount());
         thiefAnimator.SetFloat("VerticalSpeed", rigidBody.linearVelocity.y);
         thiefAnimator.SetBool("isCrouching", isCrouching);
-        thiefAnimator.SetBool("isSliding", isSliding);
+        thiefAnimator.SetBool("isSlidingb", isSliding);
     }
 
     //着地
@@ -105,6 +123,7 @@ public class Thief : MonoBehaviour
         capsuleCollider.direction = 2;//軸変更
         capsuleCollider.center = new Vector3(originalCenter.x, originalCenter.y - originalHeight / 4, 0.3f);
         foot.SetCrouchState(true);
+        thiefAudio.PlaySliding();
         Debug.Log("スライディング");
     }
 
@@ -128,23 +147,27 @@ public class Thief : MonoBehaviour
     {
         //状態を切り替える
         isCrouching = !isCrouching;
+        thiefAudio.PlayCrouch();
 
-        if (isCrouching)
+        if ((isCrouching))
         {
-            capsuleCollider.direction = 2;//軸変更
-            capsuleCollider.center = new Vector3(originalCenter.x, originalCenter.y-originalHeight/4, 0.3f);
+            capsuleCollider.direction = 1;//軸変更
+            capsuleCollider.center = originalCenter;
             foot.SetCrouchState(true);
+                transform.rotation = Quaternion.Euler(90, 90, 0);
             Debug.Log("しゃがみ状態");
         }
+        //立ち
         else
         {
             capsuleCollider.direction = 1;//軸変更
             capsuleCollider.center = originalCenter;
             foot.SetCrouchState(false);
+            transform.rotation = Quaternion.Euler(0, 90, 0);
             Debug.Log("立ち状態");
         }
     }
-
+   
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Wall"))
