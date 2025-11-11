@@ -40,7 +40,7 @@ public class Needle : GimmickObstacle, IGimmickObstacle
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.tag == "Thief")
+        if (other.tag == "Thief")
         {
             other.GetComponent<Thief>().Damage();
         }

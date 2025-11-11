@@ -3,23 +3,24 @@ using UnityEngine;
 
 public class Hp
 {
-    //ïœêî
+    //???
     [SerializeField]
     private int value;
-    
     public Hp(int value)
     {
         this.value = value;
     }
 
-    public int GetValue()
+    public int GetValue()//??hp
     {
         return value;
     }
 
-    public Hp SubHp(Hp hp)
+    //Thief.cs???Hp????
+    //Hp ?console?????????????Thief.cs?console????????????
+    public Hp SubHp(Hp hp)//hp????
     {
-        if(this.value - hp.GetValue() < 0)
+        if (this.value - hp.GetValue() < 0)
         {
             return new Hp(0);
         }

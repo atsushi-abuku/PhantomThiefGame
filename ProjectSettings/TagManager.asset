@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Foot
   - Wall
+  - Fire
   layers:
   - Default
   - TransparentFX
