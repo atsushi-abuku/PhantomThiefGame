@@ -9,6 +9,7 @@ public class Characters
     {
         talkers = new List<ITalker>();
         guardMen = new List<IGuardMan>();
+        List<GimmickObstacle> gimmickObstacles = new List<GimmickObstacle>();
         foreach (Transform child in fieldObjects.transform)
         {
             if (child.GetComponent<ITalker>() != null)
@@ -18,6 +19,21 @@ public class Characters
             if (child.GetComponent<IGuardMan>() != null)
             {
                 guardMen.Add(child.GetComponent<IGuardMan>());
+            }
+            else if(child.GetComponent<GimmickObstacle>() != null)
+            {
+                gimmickObstacles.Add(child.GetComponent<GimmickObstacle>());
+            }
+        }
+
+        foreach (GimmickObstacle gObstacle in gimmickObstacles)
+        {
+            if (gObstacle.GetComponent<GimmickObstacle>() != null)
+            {
+                foreach (ITalker talker in talkers)
+                {
+                    talker.SetGimmickObstacle(gObstacle.GetComponent<GimmickObstacle>());
+                }
             }
         }
     }

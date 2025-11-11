@@ -208,6 +208,7 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
                 break;
             case "@teachGimmick":
                 if(talker != null) talker.TeachGimmick();
+                Next();
                 break;
             default:
                 Next();
