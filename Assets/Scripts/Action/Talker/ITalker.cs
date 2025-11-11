@@ -10,4 +10,6 @@ public interface ITalker
     void DisableTalk();
 
     string GetTalkingFileName();
+
+    void SetGimmickObstacle(GimmickObstacle gimmickObstacle);
 }

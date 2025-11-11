@@ -30,6 +30,7 @@ public class Needle : GimmickObstacle, IGimmickObstacle
     public void InvokeGimmick()
     {
         this.transform.position = basePosition + this.transform.up;
+        hintObject.SetActive(false);
 
     }
 

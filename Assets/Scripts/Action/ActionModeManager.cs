@@ -17,17 +17,16 @@ public class ActionModeManager : MonoBehaviour, IGameMode
     [SerializeField] ActionFase actionFase;
     [SerializeField] GameObject fieldObjects;
     [SerializeField] CameraFollow cameraFollow;
-    private Field field;
-    private Characters characters;
+
+    private FieldObjectsManager fieldObjectsManager;
     private bool isEnd;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        field = new Field(fieldObjects);
-        characters = new Characters(fieldObjects);
-        field.SetTreasureFunc(FaseChange);
-        field.SetExitFunc(GameClear);
+        fieldObjectsManager = new FieldObjectsManager(fieldObjects);
+        fieldObjectsManager.SetTreasureFunc(FaseChange);
+        fieldObjectsManager.SetExitFunc(GameClear);
         isEnd = false;
         timer = new Timer(limitTime, GameOver);
         StartMode();
@@ -77,8 +76,7 @@ public class ActionModeManager : MonoBehaviour, IGameMode
     public void FaseChange()
     {
         actionFase = ActionFase.BACK;
-        field.FaseChange();
-        characters.FaseChange();
+        fieldObjectsManager.FaseChange();
         cameraFollow.actionFase = actionFase;
     }
 }
