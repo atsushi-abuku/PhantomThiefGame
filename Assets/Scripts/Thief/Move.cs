@@ -7,6 +7,7 @@ public class Move
     Vector3 velocity;
     ThiefInput thiefInput;
     Animator animator;
+    ThiefAudio thiefAudio;
 
     private float moveDirection = 0;
     private MoveSpeed moveSpeed;
@@ -19,12 +20,13 @@ public class Move
     private bool isDashPressed = false;
     private bool isStuck = false;
 
-    public Move(Rigidbody rb,ThiefInput input, int maxJumpCount, Animator animator)
+    public Move(Rigidbody rb,ThiefInput input, int maxJumpCount, Animator animator, ThiefAudio thiefAudio)
     {
         rigidBody = rb;
         thiefInput = input;
         this.maxJumpCount = maxJumpCount;
         this.animator = animator;
+        this.thiefAudio = thiefAudio;
         velocity = rigidBody.linearVelocity;
         moveSpeed = new MoveSpeed(2f);
 
@@ -54,13 +56,17 @@ public class Move
         thiefInput.Move.Dash.performed += ctx => 
         {
             isDashPressed = true;
-            moveSpeed = moveSpeed.AddSpeed(new MoveSpeed(2f));
+            thiefAudio.PlayDash();
+            //地上
+            if (jumpCount == 0)
+                moveSpeed = moveSpeed.AddSpeed(new MoveSpeed(2f));
         };
         thiefInput.Move.Dash.canceled += ctx => 
         {
             isDashPressed = false;
+            //地上
             if (jumpCount == 0)
-                moveSpeed = moveSpeed.SubSpeed(new MoveSpeed(2f)); 
+                moveSpeed = moveSpeed.SubSpeed(new MoveSpeed(2f));
         };
         //Spaceでジャンプ    
         thiefInput.Move.Jump.started += Jump;
@@ -76,6 +82,7 @@ public class Move
             velocity.y = 6;
             rigidBody.linearVelocity = velocity;
             jumpCount++;
+            thiefAudio.PlayJump();
             //アニメーションを開始
             animator.SetTrigger("JumpPressed");
         }

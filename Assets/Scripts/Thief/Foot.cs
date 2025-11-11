@@ -28,12 +28,12 @@ public class Foot : MonoBehaviour
 
     public void SetCrouchState(bool isCrouching) 
     {
-        if (isCrouching)
+         if (isCrouching)
         {
-            footCollider.center = new Vector3(0.3f, 0, 0);
-            footCollider.size = new Vector3(1f, 0.1f, 1f);
+            footCollider.center = new Vector3(0.1f, 0.5f, 0);
+            footCollider.size = new Vector3(0.3f, 1.1f, 1f);
         }
-        else 
+        else
         {
             footCollider.center = Vector3.zero;
             footCollider.size = new Vector3(0.1f, 0.1f, 1f);
