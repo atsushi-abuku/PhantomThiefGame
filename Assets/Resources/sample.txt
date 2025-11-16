@@ -17,5 +17,6 @@ GuardMan,normal,ここからは立ち入り禁止ですよ．
 
 @negirai
 GuardMan,normal,ご苦労様です．
+@teachGimmick
 @end
 

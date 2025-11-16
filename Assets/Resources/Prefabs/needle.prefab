@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2744860765667635973
 Transform:
   m_ObjectHideFlags: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 604bd1bc323e2ca43ad4fbc774062ad9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -188,6 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86b0b58567f0ea449faf7253fed0e0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  talkerId: 0
   trigger: {fileID: 7335657925209447963}
   hintObject: {fileID: 6093968912798422419}
 --- !u!1001 &6544476546869159322

@@ -81,22 +81,22 @@ public class Thief : MonoBehaviour
             if (invincibleTimer >= invincibleDuration)
             {
                 isInvincible = false;
-                Debug.Log("無敵終了");
+                Debug.Log("Im No Longer Invincible");
             }
         }
         //向きの切り替え
         float dir = move.GetDirection();
-        if (dir>0 && isSliding) 
+        if (dir>0 && isSliding) //スライディング
             transform.rotation = Quaternion.Euler(0, 120, 0);
         else if (dir<0 && isSliding) 
             transform.rotation = Quaternion.Euler(0, 290, 0);
 
-        else if (dir > 0 && isCrouching)
+        else if (dir > 0 && isCrouching)//しゃがみ
             transform.rotation = Quaternion.Euler(90, 90, 0);
         else if (dir < 0 && isCrouching)
             transform.rotation = Quaternion.Euler(90, 90, 180);
 
-        else if (dir > 0)
+        else if (dir > 0)//その他(歩行)
             transform.rotation = Quaternion.Euler(0, 90, 0);
         else if (dir < 0)
             transform.rotation = Quaternion.Euler(0, 270, 0);
@@ -188,10 +188,10 @@ public class Thief : MonoBehaviour
     {
         if (isInvincible)
         {
-            Debug.Log("無敵中");
+            Debug.Log("Im Invincible");
             return;
         }
-        //HPを1減らす
+        //HP - 1
         hp = hp.SubHp(new Hp(1));
         Debug.Log(hp.GetValue());
 

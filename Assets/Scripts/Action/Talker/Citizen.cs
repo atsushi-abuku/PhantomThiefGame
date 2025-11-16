@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class Citizen : MonoBehaviour, ITalker
 {
+    [SerializeField] private int id;
     [SerializeField] List<IGimmickObstacle> gimmickObstacles;
     private bool isTalkabled;
     [SerializeField] string TextFileName;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         gimmickObstacles = new List<IGimmickObstacle>();
         isTalkabled = false;
     }
 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void Talk()
@@ -63,6 +67,13 @@ public class Citizen : MonoBehaviour, ITalker
         if (other.GetComponent<Thief>() != null)
         {
             isTalkabled = false;
+        }
+    }
+    public void SetGimmickObstacle(GimmickObstacle gimmickObstacle)
+    {
+        if(gimmickObstacle.GetTakerId() == id)
+        {
+            gimmickObstacles.Add(gimmickObstacle.GetComponent<IGimmickObstacle>());
         }
     }
 }

@@ -19,6 +19,7 @@ class Choice
 public class TalkingModeManager : MonoBehaviour, IGameMode
 {
     [SerializeField] Thief thief;
+    private ThiefAudio thiefAudio;
     private ITalker talker;
     private string[] talkerNames;
     private StringReader reader;
@@ -37,11 +38,13 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
         choiceId = 0;
         talkerLine = new TalkerLine();
         thiefChoices = new List<Choice>();
+        thiefAudio = GetComponent<ThiefAudio>();
 
         isEnd = true;
 
         talkingInput = new TalkingInput();
         talkingInput.process.decide.started += ctx => {
+            thiefAudio.PlayComfirm();
             if (thiefChoices.Count > 0) DecideChoice();
             else Next();
 
@@ -51,11 +54,13 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
 
         talkingInput.process.up.started += ctx =>
         {
+            thiefAudio.PlaySelect();
             ChangeChoiceId(false);
         };
 
         talkingInput.process.down.started += ctx =>
         {
+            thiefAudio.PlaySelect();
             ChangeChoiceId(true);
         };
 
@@ -180,8 +185,6 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
                 Finish();
                 break;
             case "@ThiefType":
-                //thiefのvisualとtalkingTag[1]が一緒かどうか確認
-                //一緒ならtalkingTag[2]に飛ぶ
                 String currentVisual = thief.GetVisualType().ToString();
                 if (talkingTag[1] == currentVisual)
                 {
@@ -202,7 +205,7 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
                 }
                 break;
             case "@eventFlg":
-
+                //ステージのeventFlgを立てる(使わないかも)
                 break;
             case "@jump":
                 JumpReadLine(talkingTag[1]);
@@ -210,6 +213,7 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
                 break;
             case "@teachGimmick":
                 if(talker != null) talker.TeachGimmick();
+                Next();
                 break;
             default:
                 Next();

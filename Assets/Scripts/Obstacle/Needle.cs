@@ -30,6 +30,7 @@ public class Needle : GimmickObstacle, IGimmickObstacle
     public void InvokeGimmick()
     {
         this.transform.position = basePosition + this.transform.up;
+        hintObject.SetActive(false);
 
     }
 
@@ -40,7 +41,7 @@ public class Needle : GimmickObstacle, IGimmickObstacle
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.tag == "Thief")
+        if (other.tag == "Thief")
         {
             other.GetComponent<Thief>().Damage();
         }
