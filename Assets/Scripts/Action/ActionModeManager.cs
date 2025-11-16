@@ -18,7 +18,7 @@ public class ActionModeManager : MonoBehaviour, IGameMode
     [SerializeField] GameObject fieldObjects;
     [SerializeField] CameraFollow cameraFollow;
 
-    private ThiefAudio thiefAudio;
+    [SerializeField] private ThiefAudio thiefAudio;
     private FieldObjectsManager fieldObjectsManager;
     private bool isEnd;
 
