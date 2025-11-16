@@ -5,13 +5,12 @@ using UnityEngine;
 public class Citizen : MonoBehaviour, ITalker
 {
     [SerializeField] private int id;
-    [SerializeField] List<IGimmickObstacle> gimmickObstacles;
+    [SerializeField] List<IGimmickObstacle> gimmickObstacles = new List<IGimmickObstacle>();
     private bool isTalkabled;
     [SerializeField] string TextFileName;
 
     void Awake()
     {
-        gimmickObstacles = new List<IGimmickObstacle>();
         isTalkabled = false;
     }
 

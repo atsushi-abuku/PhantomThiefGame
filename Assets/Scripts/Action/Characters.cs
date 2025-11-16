@@ -28,11 +28,11 @@ public class Characters
 
         foreach (GimmickObstacle gObstacle in gimmickObstacles)
         {
-            if (gObstacle.GetComponent<GimmickObstacle>() != null)
+            if (gObstacle.GetComponent<IGimmickObstacle>() != null)
             {
                 foreach (ITalker talker in talkers)
                 {
-                    talker.SetGimmickObstacle(gObstacle.GetComponent<GimmickObstacle>());
+                    talker.SetGimmickObstacle(gObstacle);
                 }
             }
         }
