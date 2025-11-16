@@ -18,12 +18,14 @@ public class ActionModeManager : MonoBehaviour, IGameMode
     [SerializeField] GameObject fieldObjects;
     [SerializeField] CameraFollow cameraFollow;
 
+    private ThiefAudio thiefAudio;
     private FieldObjectsManager fieldObjectsManager;
     private bool isEnd;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        thiefAudio = GetComponent<ThiefAudio>();
         fieldObjectsManager = new FieldObjectsManager(fieldObjects);
         fieldObjectsManager.SetTreasureFunc(FaseChange);
         fieldObjectsManager.SetExitFunc(GameClear);
@@ -64,12 +66,14 @@ public class ActionModeManager : MonoBehaviour, IGameMode
     public void GameOver()
     {
         isEnd = true;
+        thiefAudio.PlayGameover();
         Debug.Log("gameover");
     }
 
     public void GameClear()
     {
         isEnd = true;
+        thiefAudio.PlayGameclear();
         Debug.Log("gameclear");
     }
 
