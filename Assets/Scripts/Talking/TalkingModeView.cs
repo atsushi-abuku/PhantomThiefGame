@@ -38,11 +38,15 @@ public class TalkingFaseView : MonoBehaviour
             string[] talkerNames = talkingModeManager.GetTalkers();
             foreach (string name in talkerNames)
             {
-                talkerModels.Add(Resources.Load("Prefabs/TalkerModels" + name) as GameObject);
+                Debug.Log("Prefabs/TalkerModels/" + name);
+                talkerModels.Add(Instantiate(Resources.Load("Prefabs/TalkerModels/" + name) as GameObject));
+                talkerModels[talkerModels.Count - 1].transform.parent = this.transform;
             }
         }
-        //talkerModels[0].transform.position = leftTalkerPosition;
-        //talkerModels[1].transform.position = rightTalkerPosition;
+        talkerModels[0].transform.localPosition = leftTalkerPosition;
+        talkerModels[0].transform.rotation = Quaternion.Euler(0, 120, 0);
+        talkerModels[1].transform.localPosition = rightTalkerPosition;
+        talkerModels[1].transform.rotation = Quaternion.Euler(0, -120, 0);
     }
 
     // Update is called once per frame
