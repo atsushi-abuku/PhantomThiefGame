@@ -19,6 +19,7 @@ class Choice
 public class TalkingModeManager : MonoBehaviour, IGameMode
 {
     [SerializeField] Thief thief;
+    private ThiefAudio thiefAudio;
     private ITalker talker;
     private string[] talkerNames;
     private StringReader reader;
@@ -37,11 +38,13 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
         choiceId = 0;
         talkerLine = new TalkerLine();
         thiefChoices = new List<Choice>();
+        thiefAudio = GetComponent<ThiefAudio>();
 
         isEnd = true;
 
         talkingInput = new TalkingInput();
         talkingInput.process.decide.started += ctx => {
+            thiefAudio.PlayComfirm();
             if (thiefChoices.Count > 0) DecideChoice();
             else Next();
 
@@ -51,11 +54,13 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
 
         talkingInput.process.up.started += ctx =>
         {
+            thiefAudio.PlaySelect();
             ChangeChoiceId(false);
         };
 
         talkingInput.process.down.started += ctx =>
         {
+            thiefAudio.PlaySelect();
             ChangeChoiceId(true);
         };
 
