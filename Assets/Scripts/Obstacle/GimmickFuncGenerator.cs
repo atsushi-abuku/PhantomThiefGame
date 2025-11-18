@@ -5,6 +5,7 @@ public delegate void GimmickFunc(GameObject gameObject);
 
 public enum GimmickType
 {
+    NONE,
     VANISH,
     FALL,
     RISE,
@@ -27,6 +28,8 @@ public class GimmickFuncGenerator
     {
         switch (type)
         {
+            case GimmickType.NONE:
+                return (GameObject gameObject) => {};
             case GimmickType.VANISH:
                 return (GameObject gameObject) => { gameObject.SetActive(false);};
             case GimmickType.FALL:
