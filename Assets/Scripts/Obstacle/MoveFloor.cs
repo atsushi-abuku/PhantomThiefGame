@@ -48,7 +48,10 @@ public class MoveFloor : GimmickObstacle, IGimmickObstacle
     public void InvokeGimmick()
     {
         GimmickFuncGenerator.GetInstance().Generate(type)(this.gameObject);
-        moveVec = Vector3.zero;
+        if(type != GimmickType.NONE)
+        {
+            moveVec = Vector3.zero;
+        }
     }
 
     public void VisualizeGimmick()
