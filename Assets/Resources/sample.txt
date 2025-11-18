@@ -1,4 +1,4 @@
-Thief,BrackSmith
+Thief,GuardMan
 @ThiefType GuardMan @negirai
 GuardMan,smile,こんにちは
 @choice
