@@ -5,16 +5,24 @@ using UnityEngine;
 
 public class TalkingFaseView : MonoBehaviour
 {
+    Dictionary<string, string> englishToJapanese = new Dictionary<string, string>()
+    {
+        { "GuardMan", "Œx”õˆõ" },
+        { "BlackSmith", "’b–è‰®‚Ì‚¨‚Á‚³‚ñ" },
+    };
     [SerializeField] Vector3 leftTalkerPosition;
     [SerializeField] Vector3 rightTalkerPosition;
 
     [SerializeField] TextMeshProUGUI textBox;
+    [SerializeField] TextMeshProUGUI nameBox;
     [SerializeField] List<TextMeshProUGUI> choiceList;
     
     [SerializeField] TalkingModeManager talkingModeManager;
     private TalkerLine talkerLine;
     private List<TalkerLine> choices;
     [SerializeField] Camera uiCamera;
+
+    string[] talkerNames;
     private List<GameObject> talkerModels;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,7 +43,7 @@ public class TalkingFaseView : MonoBehaviour
     {
         if(talkerModels.Count == 0)
         {
-            string[] talkerNames = talkingModeManager.GetTalkers();
+            talkerNames = talkingModeManager.GetTalkers();
             foreach (string name in talkerNames)
             {
                 Debug.Log("Prefabs/TalkerModels/" + name);
@@ -71,6 +79,7 @@ public class TalkingFaseView : MonoBehaviour
             }
             else choiceList[i].text = choices[i].sentence;
         }
+        nameBox.text = englishToJapanese[talkerLine.name];
         textBox.text = talkerLine.sentence;
     }
 

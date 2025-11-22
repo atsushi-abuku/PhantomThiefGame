@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 32d010e9f3a0ef840baac95c29a44f21, type: 2}
     - target: {fileID: 919132149155446097, guid: fae1bd4182f69ca4cb0e2432471c7113, type: 3}
       propertyPath: m_Name
-      value: Needle
+      value: needle
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fae1bd4182f69ca4cb0e2432471c7113, type: 3}
       propertyPath: m_TagString
@@ -209,7 +209,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 604bd1bc323e2ca43ad4fbc774062ad9, type: 2}
     - target: {fileID: 7255678730453567555, guid: c40a9d0884add3342b9dbc3160df893e, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
