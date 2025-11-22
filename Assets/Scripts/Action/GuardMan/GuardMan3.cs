@@ -4,6 +4,8 @@ using UnityEngine.AI;
 public class  GuardManvercomplete : MonoBehaviour
 {
     public Transform player;              // プレイヤー参照
+    public int playerMaxHP = 5;          // 外部管理HP
+    private int playerHP;                // 現在HP
     public float detectRange = 2f;        // 検知距離
     public float loseRange = 3f;          // 見失い距離
     public float attackRange =  0.5f;
@@ -28,6 +30,9 @@ public class  GuardManvercomplete : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
+        playerHP = playerMaxHP;
+
 
         startPos = transform.position;
         leftPos = startPos - transform.right * patrolDistance;
@@ -125,6 +130,9 @@ public class  GuardManvercomplete : MonoBehaviour
         if (Time.time - lastAttackTime > attackCooldown)
         {
             lastAttackTime = Time.time;
+
+            playerHP--;
+            Debug.Log("Player HP: " + playerHP);
 
             // 攻撃範囲外になったら追跡へ戻る
             if (distance > attackRange + 0.5f)
