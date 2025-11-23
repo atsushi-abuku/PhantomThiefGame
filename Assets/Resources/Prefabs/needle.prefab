@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 32d010e9f3a0ef840baac95c29a44f21, type: 2}
     - target: {fileID: 919132149155446097, guid: fae1bd4182f69ca4cb0e2432471c7113, type: 3}
       propertyPath: m_Name
-      value: Needle
+      value: needle
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fae1bd4182f69ca4cb0e2432471c7113, type: 3}
       propertyPath: m_TagString
@@ -302,6 +302,10 @@ PrefabInstance:
     - target: {fileID: 5169554959082372730, guid: a0c72acc170df184db268576d5ea79a7, type: 3}
       propertyPath: m_Radius
       value: 0.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169554959082372730, guid: a0c72acc170df184db268576d5ea79a7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5169554959082372730, guid: a0c72acc170df184db268576d5ea79a7, type: 3}
       propertyPath: m_Center.y
