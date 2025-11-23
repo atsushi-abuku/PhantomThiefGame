@@ -435,7 +435,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 32
+    m_Bits: 8
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1178,6 +1178,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 701507448}
+  - component: {fileID: 701507449}
   m_Layer: 0
   m_Name: fieldObject
   m_TagString: Untagged
@@ -1207,6 +1208,38 @@ Transform:
   - {fileID: 2134101694}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &701507449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701507447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.033333335
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 1e1f01a7750223c46a8230449e470842, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1001 &721409368
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1276,6 +1309,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 701507448}
     m_Modifications:
+    - target: {fileID: -8110818939095642631, guid: e741ed05bcc73e04fb48ead3ddd5d031, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 596493372}
+    - target: {fileID: -8110818939095642631, guid: e741ed05bcc73e04fb48ead3ddd5d031, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4871021767178749272, guid: e741ed05bcc73e04fb48ead3ddd5d031, type: 3}
       propertyPath: m_Name
       value: "\u5175\u58EB"
@@ -1320,6 +1361,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6803472698748939655, guid: e741ed05bcc73e04fb48ead3ddd5d031, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 596493372}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2333,7 +2378,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 119
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 839958585897336656}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BeginPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 3229575548539634086}
   - component: {fileID: 2083321212064178234}
   - component: {fileID: -1726539212094848314}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MoveFloor
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8345424804007044781}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EndPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,6 +271,10 @@ PrefabInstance:
     - target: {fileID: 7850732754296152949, guid: a0c72acc170df184db268576d5ea79a7, type: 3}
       propertyPath: m_Name
       value: GimmickTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 7850732754296152949, guid: a0c72acc170df184db268576d5ea79a7, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
