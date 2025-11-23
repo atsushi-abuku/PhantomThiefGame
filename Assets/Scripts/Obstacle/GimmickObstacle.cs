@@ -16,4 +16,8 @@ public abstract class GimmickObstacle : MonoBehaviour
         return talkerId;
     }
 
+    public bool IsVisualizeGimmick()
+    {
+        return visualizeFlg;
+    }
 }

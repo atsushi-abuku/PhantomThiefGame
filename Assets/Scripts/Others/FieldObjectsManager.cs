@@ -25,4 +25,9 @@ public class FieldObjectsManager
         field.FaseChange();
         characters.FaseChange();
     }
+
+    public int GetCollectRate()
+    {
+        return field.GetVisualizedGimmickObjectRate();
+    }
 }
