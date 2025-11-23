@@ -164,9 +164,10 @@ public class  GuardManvercomplete : MonoBehaviour
     void FlipTowards(float dirX)
     {
         if (dirX == 0) return;
-        Vector3 scale = transform.localScale;
-        scale.x = dirX > 0 ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
-        transform.localScale = scale;
+
+        Vector3 s = transform.localScale;
+        s.x = dirX > 0 ? Mathf.Abs(s.x) : -Mathf.Abs(s.x);
+        transform.localScale = s;
     }
 
 
