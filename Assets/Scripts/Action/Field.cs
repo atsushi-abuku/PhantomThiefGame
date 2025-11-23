@@ -50,4 +50,18 @@ public class Field
         }
         exit.gameObject.SetActive(true);
     }
+    public int GetVisualizedGimmickObjectRate()
+    {
+        int allGimmickNum = gimmickObstacles.Count;
+        int visualizedObjectNum = 0;
+        for(int i = 0; i < allGimmickNum; i++)
+        {
+            if (gimmickObstacles[i].IsVisualizeGimmick())
+            {
+                visualizedObjectNum++;
+            }
+        }
+
+        return visualizedObjectNum * 100/ allGimmickNum;
+    }
 }

@@ -83,4 +83,9 @@ public class ActionModeManager : MonoBehaviour, IGameMode
         fieldObjectsManager.FaseChange();
         cameraFollow.actionFase = actionFase;
     }
+
+    public int GetActionCollectRate()
+    {
+        return fieldObjectsManager.GetCollectRate();
+    }
 }
