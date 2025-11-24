@@ -13,8 +13,6 @@ public class Thief : MonoBehaviour
     Animator thiefAnimator;
     CapsuleCollider capsuleCollider;
     ThiefAudio thiefAudio;
-    //AudioSource audioSource;
-    //AudioClip clip;
 
     public Hp hp;
     public int maxJumpCount = 1;
