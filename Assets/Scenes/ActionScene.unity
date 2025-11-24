@@ -1310,6 +1310,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 701507448}
     m_Modifications:
     - target: {fileID: -8110818939095642631, guid: e741ed05bcc73e04fb48ead3ddd5d031, type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 2134101696}
+    - target: {fileID: -8110818939095642631, guid: e741ed05bcc73e04fb48ead3ddd5d031, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 596493372}
@@ -2564,6 +2568,11 @@ RectTransform:
 --- !u!4 &2134101694 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5247406950682124258, guid: e741ed05bcc73e04fb48ead3ddd5d031, type: 3}
+  m_PrefabInstance: {fileID: 864859732}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &2134101696 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: -9093265366077159476, guid: e741ed05bcc73e04fb48ead3ddd5d031, type: 3}
   m_PrefabInstance: {fileID: 864859732}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1674103502912528524
