@@ -41,7 +41,7 @@ public class Thief : MonoBehaviour
         hp = new Hp(3);
         thiefInput = new ThiefInput();
         thiefInput.Enable();
-        visual = new Visual(0,thiefInput, thiefAudio);
+        visual = new Visual(gameObject, 0, thiefInput, thiefAudio);
         rigidBody = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         thiefAnimator = GetComponent<Animator>();
