@@ -44,12 +44,7 @@ public class GimmickFuncGenerator
             case GimmickType.RISE:
                 return (GameObject gameObject) =>
                 {
-                    if (gameObject.GetComponent<Rigidbody>() == null)
-                    {
-                        gameObject.AddComponent<Rigidbody>();
-                    }
-                    gameObject.GetComponent<Rigidbody>().isKinematic = false;
-                    gameObject.GetComponent<Rigidbody>().linearVelocity += new Vector3(0,1,0);
+                    gameObject.transform.position += new Vector3(0,0.01f,0);
                 };
             default:
                 return (GameObject gameObject) => { };

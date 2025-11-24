@@ -1,0 +1,12 @@
+Thief,GuardMan
+GuardMan,smile,こんにちは
+@choice
+Thief,smile,こんにちは @normal
+Thief,smile,やぁ @normal
+@choiceEnd
+
+@normal
+GuardMan,normal,この先にトゲの仕掛けがあるから注意してください。
+@teachGimmick
+@end
+
