@@ -8,12 +8,31 @@ public class MoveFloor : GimmickObstacle, IGimmickObstacle
     [SerializeField] Transform endTransform;
     [SerializeField] float speed;
     [SerializeField] GimmickType type;
+    [SerializeField] TextMeshProUGUI hintText;
+
+    GimmickFunc gimmickFunc;
     Vector3 moveVec;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         trigger.SetInvokeGimmickFunc(InvokeGimmick);
         moveVec = (beginTransform.position - endTransform.position)/ 240f * speed;
+
+        switch (type)
+        {
+            case GimmickType.RISE:
+                hintText.text = "Å™";
+                break;
+            case GimmickType.FALL:
+                hintText.text = "Å´";
+                break;
+            case GimmickType.VANISH:
+                hintText.text = "è¡";
+                hintText.fontSize = 36;
+                break;
+        }
+        gimmickFunc = GimmickFuncGenerator.GetInstance().Generate(GimmickType.NONE);
+        hintText.enabled = false;
     }
 
     // Update is called once per frame
@@ -22,6 +41,7 @@ public class MoveFloor : GimmickObstacle, IGimmickObstacle
         ShowHint();
         Move();
         BeginEndPositionPutBack();
+        gimmickFunc(this.gameObject);
     }
 
     private void Move()
@@ -47,7 +67,7 @@ public class MoveFloor : GimmickObstacle, IGimmickObstacle
 
     public void InvokeGimmick()
     {
-        GimmickFuncGenerator.GetInstance().Generate(type)(this.gameObject);
+        gimmickFunc = GimmickFuncGenerator.GetInstance().Generate(type);
         if(type != GimmickType.NONE)
         {
             moveVec = Vector3.zero;
@@ -57,6 +77,7 @@ public class MoveFloor : GimmickObstacle, IGimmickObstacle
     public void VisualizeGimmick()
     {
         visualizeFlg = true;
+        hintText.enabled = true;
     }
 
     public void ShowHint()

@@ -63,7 +63,12 @@ public class TalkingFaseView : MonoBehaviour
         uiCamera.enabled = !talkingModeManager.CheckIsEnd();
         if (!uiCamera.enabled)
         {
-            talkerModels.Clear();
+            if(talkerModels.Count > 0)
+            {
+                Destroy(talkerModels[0]);
+                Destroy(talkerModels[1]);
+                talkerModels.Clear();
+            }
             return;
         }
         UpdateTalkerModels();
