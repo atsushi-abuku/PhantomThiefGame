@@ -1,174 +1,143 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class  GuardManvercomplete : MonoBehaviour
+public class EnemyPatrolChaseReturnAttackHP : MonoBehaviour
 {
-    public Transform player;              // プレイヤー参照
-    public int playerMaxHP = 5;          // 外部管理HP
-    private int playerHP;                // 現在HP
-    public float detectRange = 2f;        // 検知距離
-    public float loseRange = 3f;          // 見失い距離
-    public float attackRange =  0.5f;
-    public float patrolDistance = 5f;     // 左右移動距離
-    public float patrolSpeed = 1f;        // パトロール時速度
-    public float chaseSpeed = 1.2f;       // 追跡速度
-    public float returnSpeed = 1.2f;        // 復帰速度
-    public float attackCooldown = 1.2f;  // 攻撃間隔（秒）
+    public NavMeshAgent agent;
+    public Transform player;
 
-    private NavMeshAgent agent;
-    private Vector3 startPos;
-    private Vector3 leftPos;
-    private Vector3 rightPos;
-    private Vector3 targetPos;
-
+    public Vector3 leftPoint;
+    public Vector3 rightPoint;
     private bool movingRight = true;
-    private float lastAttackTime = 0f;
+
+    public float findDistance = 3f;
+    public float loseDistance = 4f;
+    public float attackDistance = 1f;
+
+    public float patrolSpeed = 2f;
+    public float chaseSpeed =  2.5f;
+
+    // HPダメージ方式（プレイヤースクリプト不要）
+    public float playerHP = 5f;
+    public float attackDamage = 1f;
+    public float attackCooldown = 1.2f;
+    private float cooldownTimer = 0f;
 
     private enum State { Patrol, Chase, Return, Attack }
-    private State currentState = State.Patrol;
+    private State state = State.Patrol;
 
-    void Start()
+    private Vector3 homePosition;
+
+    private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-
-        playerHP = playerMaxHP;
-
-
-        startPos = transform.position;
-        leftPos = startPos - transform.right * patrolDistance;
-        rightPos = startPos + transform.right * patrolDistance;
-
-        targetPos = rightPos;
-        agent.speed = patrolSpeed;
-        agent.SetDestination(targetPos);
+        agent.updateRotation = false; // scaleを反転させないため自動回転OFF
+        homePosition = transform.position;
     }
 
-    void Update()
+    private void Update()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        cooldownTimer -= Time.deltaTime;
 
-        switch (currentState)
+        switch (state)
         {
-            case State.Patrol:
-                Patrol();
-                if (distanceToPlayer <= detectRange)
-                {
-                    currentState = State.Chase;
-                    agent.speed = chaseSpeed;
-                }
-                break;
-
-            case State.Chase:
-                ChasePlayer(distanceToPlayer);
-                break;
-
-
-            case State.Attack:
-                AttackPlayer(distanceToPlayer);
-                break;
-
-            case State.Return:
-                ReturnToStart();
-                if (!agent.pathPending && agent.remainingDistance < 0.2f)
-                {
-                    // 元の位置に戻ったらパトロール再開
-                    currentState = State.Patrol;
-                    agent.speed = patrolSpeed;
-                    targetPos = rightPos;
-                    agent.SetDestination(targetPos);
-                }
-                break;
+            case State.Patrol: Patrol(); break;
+            case State.Chase: Chase(); break;
+            case State.Return: ReturnToHome(); break;
+            case State.Attack: Attack(); break;
         }
+
+        LookDirection(); // 回転処理（scaleを触らない）
     }
 
     void Patrol()
     {
-        // パトロール用スピード
         agent.speed = patrolSpeed;
+        Vector3 target = movingRight ? rightPoint : leftPoint;
+        SetDestinationOnce(target);
 
-        // 目的地到達チェック
-        if (!agent.pathPending && agent.remainingDistance < 0.2f)
-        {
+        if (Vector3.Distance(transform.position, target) < 1f)
             movingRight = !movingRight;
-            targetPos = movingRight ? rightPos : leftPos;
-            agent.SetDestination(targetPos);
 
-            // 向きを変える
-            FlipTowards(targetPos.x - transform.position.x);
-        }
+        if (Vector3.Distance(transform.position, player.position) < findDistance)
+            state = State.Chase;
     }
 
-    void ChasePlayer(float distance)
+    void Chase()
     {
-        if (player == null) return;
+        agent.speed = chaseSpeed;
+        SetDestinationOnce(player.position);
 
-        agent.SetDestination(player.position);
+        float dist = Vector3.Distance(transform.position, player.position);
 
-        // 向きをプレイヤー方向に
-        FlipTowards(player.position.x - transform.position.x);
-
-        if (distance <= attackRange)
-        {
-            // 攻撃状態へ
-            currentState = State.Attack;
-            agent.isStopped = true; // 攻撃中は停止
-        }
-        else if (distance > loseRange)
-        {
-            currentState = State.Return;
-            agent.speed = returnSpeed;
-            agent.SetDestination(startPos);
-        }
+        if (dist < attackDistance)
+            state = State.Attack;
+        else if (dist > loseDistance)
+            state = State.Return;
     }
 
-    void AttackPlayer(float distance)
+    void ReturnToHome()
     {
-        // プレイヤー方向を向く
-        FlipTowards(player.position.x - transform.position.x);
+        agent.speed = patrolSpeed;
+        SetDestinationOnce(homePosition);
 
-        // 攻撃クールダウン
-        if (Time.time - lastAttackTime > attackCooldown)
+        if (Vector3.Distance(transform.position, homePosition) < 1f)
+            state = State.Patrol;
+    }
+
+    void Attack()
+    {
+        agent.isStopped = true;  // 攻撃時停止
+        Vector3 dir = player.position - transform.position;
+        dir.y = 0;
+        transform.rotation = Quaternion.LookRotation(dir);
+
+        if (cooldownTimer <= 0f)
         {
-            lastAttackTime = Time.time;
-
+            playerHP -= attackDamage;
+            cooldownTimer = attackCooldown;
             playerHP--;
             Debug.Log("Player HP: " + playerHP);
 
-            // 攻撃範囲外になったら追跡へ戻る
-            if (distance > attackRange + 0.5f)
-            {
-                currentState = State.Chase;
-                agent.isStopped = false;
-            }
         }
 
-
-    }
-
-    void ReturnToStart()
-    {
-        agent.isStopped = false;
-        agent.SetDestination(startPos);
-        FlipTowards(startPos.x - transform.position.x);
-
-        if (!agent.pathPending && agent.remainingDistance < 0.2f)
+        float dist = Vector3.Distance(transform.position, player.position);
+        if (dist > attackDistance)  // 離れたら再び追跡へ
         {
-            currentState = State.Patrol;
-            agent.speed = patrolSpeed;
-            targetPos = rightPos;
-            agent.SetDestination(targetPos);
+            agent.isStopped = false;
+            state = State.Chase;
         }
     }
 
-
-    void FlipTowards(float dirX)
+    void SetDestinationOnce(Vector3 pos)
     {
-        if (dirX == 0) return;
-        Vector3 scale = transform.localScale;
-        scale.x = dirX > 0 ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
-        transform.localScale = scale;
+        if (!agent.hasPath || agent.destination != pos)
+            agent.SetDestination(pos);
+        agent.isStopped = false;
     }
 
+    void LookDirection()
+    {
+        Vector3 dir;
 
+        if (state == State.Attack)
+            return; // 攻撃中は LookAt に任せる
 
+        if (state == State.Chase)
+            dir = player.position - transform.position;
+        else if (state == State.Return)
+            dir = homePosition - transform.position;
+        else
+        {
+            Vector3 patrolTarget = movingRight ? rightPoint : leftPoint;
+            dir = patrolTarget - transform.position;
+        }
+
+        dir.y = 0;
+        if (dir.sqrMagnitude > 0.1f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * 8f);
+        }
+    }
 }
+

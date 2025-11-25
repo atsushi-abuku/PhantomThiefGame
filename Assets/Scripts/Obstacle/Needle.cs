@@ -36,6 +36,7 @@ public class Needle : GimmickObstacle, IGimmickObstacle
 
     public void VisualizeGimmick()
     {
+        hintObject.SetActive(true);
         visualizeFlg = true;
     }
 

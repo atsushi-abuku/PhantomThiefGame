@@ -18,14 +18,14 @@ public class ActionModeManager : MonoBehaviour, IGameMode
     [SerializeField] GameObject fieldObjects;
     [SerializeField] CameraFollow cameraFollow;
 
-    [SerializeField] private ThiefAudio thiefAudio;
+    private BGM bgm;
     private FieldObjectsManager fieldObjectsManager;
     private bool isEnd;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        thiefAudio = GetComponent<ThiefAudio>();
+        bgm = GetComponent<BGM>();
         fieldObjectsManager = new FieldObjectsManager(fieldObjects);
         fieldObjectsManager.SetTreasureFunc(FaseChange);
         fieldObjectsManager.SetExitFunc(GameClear);
@@ -66,21 +66,33 @@ public class ActionModeManager : MonoBehaviour, IGameMode
     public void GameOver()
     {
         isEnd = true;
-        thiefAudio.PlayGameover();
+        bgm.PlayGameover();
         Debug.Log("gameover");
     }
 
     public void GameClear()
     {
         isEnd = true;
-        thiefAudio.PlayGameclear();
+        bgm.PlayGameclear();
         Debug.Log("gameclear");
     }
 
     public void FaseChange()
     {
-        actionFase = ActionFase.BACK;
-        fieldObjectsManager.FaseChange();
-        cameraFollow.actionFase = actionFase;
+        thief.DisableInput();
+        StartCoroutine(bgm.PlayTreasureThenAlert(() =>
+        {
+            bgm.PlayEscape();
+            thief.EnableInput();
+            actionFase = ActionFase.BACK;
+            fieldObjectsManager.FaseChange();
+            cameraFollow.actionFase = actionFase;
+        }));
+        
+    }
+
+    public int GetActionCollectRate()
+    {
+        return fieldObjectsManager.GetCollectRate();
     }
 }
