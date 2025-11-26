@@ -29,7 +29,6 @@ public class Field
     public void FaseChange()
     {
         EnableGimmickObstacles();
-
     }
 
     public void SetTreasureFunc(StolenFunc treasureFunc)

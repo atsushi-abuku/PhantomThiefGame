@@ -3,17 +3,15 @@ public delegate void StolenFunc();
 
 public class Treasure : MonoBehaviour
 {
+    [SerializeField] private Fire fire;
     StolenFunc stolenFunc;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (fire == null)
+        {
+            fire = GetComponent<Fire>();
+        }
     }
 
     public void SetStolenFunc(StolenFunc stolenFunc)
@@ -23,7 +21,14 @@ public class Treasure : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        stolenFunc();
-        Destroy(this.gameObject);
+        if (collision.gameObject.tag == "Thief")
+        {
+            if (fire != null)
+            {
+                fire.Activate();
+            }
+                stolenFunc();
+                Destroy(this.gameObject);
+        }
     }
 }

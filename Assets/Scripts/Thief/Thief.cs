@@ -125,9 +125,10 @@ public class Thief : MonoBehaviour
         Debug.Log("スライディング");
     }
 
-    /*
+    //スライディング・突き刺さりチェック
     private void OnTriggerEnter(Collider other)
     {
+        /*
         if(other.CompareTag("Enemy") && isSliding)
         {
             Enemy enemy = other.GetComponent<Enemy>();//敵にEnemyというタグ
@@ -137,8 +138,21 @@ public class Thief : MonoBehaviour
                 Debug.Log("スライディングヒット");
             }
         }
+        */
+        if (other.CompareTag("Wall"))
+        {
+            Vector3 contactDirection = (other.transform.position - transform.position).normalized;
+
+            // 右に進んでいて右側にぶつかった、または左に進んでいて左側にぶつかった
+            if ((move.GetDirection() > 0 && contactDirection.x > 0.5f) ||
+                (move.GetDirection() < 0 && contactDirection.x < -0.5f))
+            {
+                move.SetStuck(true);
+                Debug.Log("横から刺さった → 移動停止");
+            }
+        }
     }
-    */
+    
 
     //しゃがみ
     void Crouch()
@@ -163,22 +177,6 @@ public class Thief : MonoBehaviour
             foot.SetCrouchState(false);
             transform.rotation = Quaternion.Euler(0, 90, 0);
             Debug.Log("立ち状態");
-        }
-    }
-   
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Wall"))
-        {
-            Vector3 contactDirection = (other.transform.position - transform.position).normalized;
-
-            // 右に進んでいて右側にぶつかった、または左に進んでいて左側にぶつかった
-            if ((move.GetDirection() > 0 && contactDirection.x > 0.5f) ||
-                (move.GetDirection() < 0 && contactDirection.x < -0.5f))
-            {
-                move.SetStuck(true);
-                Debug.Log("横から刺さった → 移動停止");
-            }
         }
     }
 
