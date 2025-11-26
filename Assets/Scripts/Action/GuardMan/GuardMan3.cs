@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyPatrolChaseReturnAttackHP : MonoBehaviour
+public class EnemyPatrolChaseReturnAttackHP : MonoBehaviour, IGuardMan
 {
     public NavMeshAgent agent;
     public Transform player;
@@ -24,7 +24,7 @@ public class EnemyPatrolChaseReturnAttackHP : MonoBehaviour
     private float cooldownTimer = 0f;
 
     private enum State { Patrol, Chase, Return, Attack }
-    private State state = State.Patrol;
+    [SerializeField] private State state = State.Patrol;
 
     private Vector3 homePosition;
 
@@ -84,7 +84,12 @@ public class EnemyPatrolChaseReturnAttackHP : MonoBehaviour
             state = State.Patrol;
     }
 
-    void Attack()
+    public void Stanby()
+    {
+        this.enabled = true;
+        this.gameObject.SetActive(true);
+    }
+    public void Attack()
     {
         agent.isStopped = true;  // 攻撃時停止
         Vector3 dir = player.position - transform.position;
@@ -96,6 +101,7 @@ public class EnemyPatrolChaseReturnAttackHP : MonoBehaviour
             playerHP -= attackDamage;
             cooldownTimer = attackCooldown;
             playerHP--;
+            player.GetComponent<Thief>().Damage();
             Debug.Log("Player HP: " + playerHP);
 
         }

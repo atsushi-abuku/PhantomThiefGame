@@ -162,7 +162,7 @@ MonoBehaviour:
   beginTransform: {fileID: 839958585897336656}
   endTransform: {fileID: 8345424804007044781}
   speed: 1
-  type: 1
+  type: 0
   hintText: {fileID: 1883294180260781593}
 --- !u!54 &-1726539212094848314
 Rigidbody:
@@ -506,6 +506,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3116740358103947644, guid: a0c72acc170df184db268576d5ea79a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4317042547621221749, guid: a0c72acc170df184db268576d5ea79a7, type: 3}
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7850732754296152949, guid: a0c72acc170df184db268576d5ea79a7, type: 3}

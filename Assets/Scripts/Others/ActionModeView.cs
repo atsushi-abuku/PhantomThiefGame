@@ -5,6 +5,7 @@ public class ActionModeView : MonoBehaviour
 {
     [SerializeField] ActionModeManager actionModeManager;
     [SerializeField] TextMeshProUGUI collectRateTMP;
+    [SerializeField] TextMeshProUGUI timeTMP;
     [SerializeField] GameObject hpObject;
     [SerializeField] Thief thief;
     GameObject[] hpObjects;
@@ -29,8 +30,8 @@ public class ActionModeView : MonoBehaviour
         collectRateTMP.text = "ÉqÉìÉgâÒé˚ó¶ÅF" + actionModeManager.GetActionCollectRate() + "%";
         for (int i = 0; i < hpObjects.Length; i++)
         {
-            if(i <= thief.hp.GetValue()) hpObjects[i].SetActive(true);
-            else hpObjects[i].SetActive(true);
+            if(i < thief.hp.GetValue()) hpObjects[i].SetActive(true);
+            else hpObjects[i].SetActive(false);
         }
     }
 }
