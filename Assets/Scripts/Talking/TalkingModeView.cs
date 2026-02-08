@@ -35,7 +35,7 @@ public class TalkingFaseView : MonoBehaviour
         foreach (TextMeshProUGUI choice in choiceList)
         {
             choice.gameObject.SetActive(false);
-            choice.color = Color.white;
+            choice.color = Color.black;
         }
     }
 

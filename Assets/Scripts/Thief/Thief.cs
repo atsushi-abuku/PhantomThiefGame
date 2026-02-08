@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -36,7 +37,7 @@ public class Thief : MonoBehaviour
     void Start()
     {
         thiefAudio = GetComponent<ThiefAudio>();
-        hp = new Hp(3);
+        //hp = new Hp(3);
         thiefInput = new ThiefInput();
         thiefInput.Enable();
         visual = new Visual(gameObject, 0, thiefInput, thiefAudio);
@@ -62,6 +63,22 @@ public class Thief : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //無敵時間のカウント
+        if (isInvincible)
+        {
+
+            invincibleTimer += Time.deltaTime;
+            if (invincibleTimer <= invincibleDuration / 3)
+            {
+                return;
+            }
+            if (invincibleTimer >= invincibleDuration)
+            {
+                isInvincible = false;
+                Debug.Log("Im No Longer Invincible");
+            }
+        }
+
         move.ApplyMovement();
         if (isSliding)
         {
@@ -70,16 +87,6 @@ public class Thief : MonoBehaviour
             {
                 isSliding = false;
                 Crouch();
-            }
-        }
-        //無敵時間のカウント
-        if (isInvincible)
-        {
-            invincibleTimer += Time.deltaTime;
-            if (invincibleTimer >= invincibleDuration)
-            {
-                isInvincible = false;
-                Debug.Log("Im No Longer Invincible");
             }
         }
         //向きの切り替え
@@ -182,7 +189,8 @@ public class Thief : MonoBehaviour
 
     public void Damage()
     {
-        if (isInvincible)
+        if (hp.GetValue() == 0) return;
+            if (isInvincible)
         {
             Debug.Log("Im Invincible");
             return;
@@ -190,9 +198,13 @@ public class Thief : MonoBehaviour
         //HP - 1
         hp = hp.SubHp(new Hp(1));
         Debug.Log(hp.GetValue());
-
+        thiefAnimator.Play("Damaged");
         isInvincible = true;
         invincibleTimer = 0f;
+        if (hp.GetValue() == 0)
+        {
+            thiefAnimator.Play("GoDown");
+        }
     }
 
     //現在の姿を得る
@@ -203,7 +215,7 @@ public class Thief : MonoBehaviour
 
   
 
-private void OnDisable()
+    private void OnDisable()
     {
         thiefInput?.Disable();
     }
@@ -216,5 +228,10 @@ private void OnDisable()
     public void DisableInput()
     {
         thiefInput?.Disable();
+    }
+
+    public void FaseChange()
+    {
+        visual.TransToThief();
     }
 }

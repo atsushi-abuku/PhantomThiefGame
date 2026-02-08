@@ -1,5 +1,3 @@
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class HitBox : MonoBehaviour

@@ -12,6 +12,7 @@ public class MoveFloor : GimmickObstacle, IGimmickObstacle
 
     GimmickFunc gimmickFunc;
     Vector3 moveVec;
+    Transform placedTransform;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,9 +31,13 @@ public class MoveFloor : GimmickObstacle, IGimmickObstacle
                 hintText.text = "è¡";
                 hintText.fontSize = 36;
                 break;
+            case GimmickType.NONE:
+                hintText.text = "";
+                break;
         }
         gimmickFunc = GimmickFuncGenerator.GetInstance().Generate(GimmickType.NONE);
         hintText.enabled = false;
+        placedTransform = null;
     }
 
     // Update is called once per frame
@@ -51,6 +56,7 @@ public class MoveFloor : GimmickObstacle, IGimmickObstacle
             moveVec *= -1;
         }
         this.transform.position += moveVec;
+        if(placedTransform != null) placedTransform.position += moveVec;
     }
 
     private void BeginEndPositionPutBack()
@@ -88,7 +94,7 @@ public class MoveFloor : GimmickObstacle, IGimmickObstacle
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Thief")
         {
@@ -100,6 +106,35 @@ public class MoveFloor : GimmickObstacle, IGimmickObstacle
             }
             topParent.parent = this.transform;
         }
+    }*/
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Foot") placedTransform = other.transform.parent;
+        /*if (other.gameObject.tag == "Foot")
+        {
+            Transform topParent = other.transform;
+            while (topParent.parent != null)
+            {
+                topParent = topParent.parent;
+                Debug.Log(topParent);
+            }
+            topParent.parent = this.transform;
+        }*/
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Foot") placedTransform = null;
+        /*if (other.gameObject.tag == "Foot")
+        {
+            Transform topParent = other.transform;
+            while (topParent.parent != this.transform && topParent.parent != null)
+            {
+                topParent = topParent.parent;
+            }
+            topParent.parent = null;
+        }*/
     }
 
     private void OnCollisionExit(Collision collision)

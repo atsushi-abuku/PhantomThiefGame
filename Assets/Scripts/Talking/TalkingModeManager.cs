@@ -72,6 +72,22 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
         reader = new StringReader(talkingText.text);
         line = reader.ReadLine();
         talkerNames = line.Split(',');
+        if (talkerNames[0] == "Thief")
+        {
+            talkerNames[0] = GetThiefName(thief.GetVisualType());
+        }
+    }
+
+    private string GetThiefName(VisualType type)
+    {
+        switch (type)
+        {
+            case VisualType.GuardMan:
+                return "GuardMan";
+            case VisualType.NPC:
+                return "BlackSmith";
+        }
+        return "Thief";
     }
 
     public void SetTalkingPartner(ITalker talker)
@@ -185,7 +201,7 @@ public class TalkingModeManager : MonoBehaviour, IGameMode
                 Finish();
                 break;
             case "@ThiefType":
-                String currentVisual = thief.GetVisualType().ToString();
+                String currentVisual = GetThiefName(thief.GetVisualType());
                 if (talkingTag[1] == currentVisual)
                 {
                     JumpReadLine(talkingTag[2]);

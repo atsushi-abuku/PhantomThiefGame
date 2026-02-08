@@ -2,11 +2,14 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using static UnityEngine.Timeline.AnimationPlayableAsset;
 
 public enum ActionFase
 {
     GO,
-    BACK
+    BACK,
+    CLEARED,
+    GAMEOEVR,
 }
 
 public class ActionModeManager : MonoBehaviour, IGameMode
@@ -58,6 +61,10 @@ public class ActionModeManager : MonoBehaviour, IGameMode
         switch (actionFase)
         {
             case ActionFase.BACK:
+                if (thief.hp.GetValue() <= 0)
+                {
+                    GameOver();
+                }
                 timer.Update();
                 break;
         }
@@ -67,6 +74,8 @@ public class ActionModeManager : MonoBehaviour, IGameMode
     {
         isEnd = true;
         bgm.PlayGameover();
+        actionFase = ActionFase.GAMEOEVR;
+        StopMode();
         Debug.Log("gameover");
     }
 
@@ -74,6 +83,7 @@ public class ActionModeManager : MonoBehaviour, IGameMode
     {
         isEnd = true;
         bgm.PlayGameclear();
+        actionFase = ActionFase.CLEARED;
         Debug.Log("gameclear");
     }
 
@@ -87,6 +97,7 @@ public class ActionModeManager : MonoBehaviour, IGameMode
             actionFase = ActionFase.BACK;
             fieldObjectsManager.FaseChange();
             cameraFollow.actionFase = actionFase;
+            thief.FaseChange();
         }));
         
     }
@@ -95,4 +106,9 @@ public class ActionModeManager : MonoBehaviour, IGameMode
     {
         return fieldObjectsManager.GetCollectRate();
     }
+
+    public ActionFase GetActionFase() {
+        return actionFase;
+    }
+
 }

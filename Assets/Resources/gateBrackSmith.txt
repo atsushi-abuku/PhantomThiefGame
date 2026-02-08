@@ -1,0 +1,11 @@
+Thief,BlackSmith
+@ThiefType BlackSmith @ask
+BlackSmith,smile,ここは部外者は立ち入り禁止だ。
+@end
+
+@ask
+BlackSmith,smile,この先に行きたいのか？
+BlackSmith,smile,なら、合言葉を答えろ。
+@teachGimmick
+@end
+
