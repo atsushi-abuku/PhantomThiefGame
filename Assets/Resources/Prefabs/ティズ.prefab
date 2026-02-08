@@ -200,7 +200,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 8a28af7609f369040ba811aa4c0d1e10, type: 2}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -9186690982081781446, guid: df80349f74738bf43bdb487a150cf453, type: 3}
+    - {fileID: 3944313161788818033, guid: df80349f74738bf43bdb487a150cf453, type: 3}
+    - {fileID: 357344144889231236, guid: df80349f74738bf43bdb487a150cf453, type: 3}
+    - {fileID: -9018269843782204965, guid: df80349f74738bf43bdb487a150cf453, type: 3}
+    - {fileID: 6829485909940997511, guid: df80349f74738bf43bdb487a150cf453, type: 3}
+    - {fileID: 8540762849855351454, guid: df80349f74738bf43bdb487a150cf453, type: 3}
+    - {fileID: 4979463630067998951, guid: df80349f74738bf43bdb487a150cf453, type: 3}
+    - {fileID: 4302101035137158586, guid: df80349f74738bf43bdb487a150cf453, type: 3}
+    - {fileID: 2505243383444892356, guid: df80349f74738bf43bdb487a150cf453, type: 3}
+    - {fileID: 2563971999557624215, guid: df80349f74738bf43bdb487a150cf453, type: 3}
+    - {fileID: -398321088993075008, guid: df80349f74738bf43bdb487a150cf453, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: df80349f74738bf43bdb487a150cf453, type: 3}
       insertIndex: -1
@@ -427,14 +438,14 @@ PrefabInstance:
     - target: {fileID: 1747897531655075013, guid: f3305df37fd0c584a93fe1a00684f70f, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 86b6a6bce7e271a4dabeeaca8b95e4f3, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 5037905049269351429, guid: f3305df37fd0c584a93fe1a00684f70f, type: 3}
       propertyPath: m_Name
       value: "\u30C6\u30A3\u30BA_Thief"
       objectReference: {fileID: 0}
     - target: {fileID: 5037905049269351429, guid: f3305df37fd0c584a93fe1a00684f70f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5666068603010084543, guid: f3305df37fd0c584a93fe1a00684f70f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -476,6 +487,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6105902422137822258, guid: f3305df37fd0c584a93fe1a00684f70f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -497,7 +512,7 @@ PrefabInstance:
     - target: {fileID: 1827399165736262128, guid: d0b62e293b8961c479a4d1cea6b389a8, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 86b6a6bce7e271a4dabeeaca8b95e4f3, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 4969658021576939824, guid: d0b62e293b8961c479a4d1cea6b389a8, type: 3}
       propertyPath: m_Name
       value: "\u935B\u51B6\u5C4B_Thief"
@@ -615,7 +630,7 @@ PrefabInstance:
     - target: {fileID: 5478076840430528912, guid: 98486cd07f22ea849a10996bd9fb538c, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 86b6a6bce7e271a4dabeeaca8b95e4f3, type: 2}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

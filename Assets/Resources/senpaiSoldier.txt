@@ -1,0 +1,31 @@
+Thief,GuardMan
+@ThiefType Thief @gimon
+@ThiefType BlackSmith @negirai
+@ThiefType GuardMan @educate
+
+@negirai
+GuardMan,normal,ご苦労様です。
+@end
+
+@gimon
+GuardMan,normal,君は誰だい？
+@end
+
+@educate
+GuardMan,normal,よう！新人！！元気してるか？
+GuardMan,normal,お前、この辺の警備は始めてだったよな？\nこの辺の仕掛けはちゃんと頭に入ってるんだろうな？
+@choice
+Thief,smile,はい @yes
+Thief,smile,いいえ @no
+@choiceEnd
+
+@yes
+GuardMan,normal,さすがだな。優秀、優秀。
+@end
+
+@no
+GuardMan,normal,この辺の仕掛けは危ないものが多いからな。\n把握してないとケガするぞ。
+GuardMan,normal,仕方ない。俺が教えてやる。
+@teachGimmick
+@end
+

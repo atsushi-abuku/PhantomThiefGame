@@ -1,0 +1,23 @@
+Thief,BlackSmith
+@ThiefType BlackSmith @powhara
+BlackSmith,smile,部外者は去れ！
+@end
+
+@powhara
+BlackSmith,normal,おい、新人！！
+BlackSmith,normal,お前、この辺の仕掛けについてしってるか？
+@choice
+Thief,smile,はい @yes
+Thief,smile,いいえ @no
+@choiceEnd
+
+@yes
+BlackSmith,normal,ならいい。
+@end
+
+@no
+BlackSmith,normal,マニュアルに書いてあっただろ？\nバカだな～～(笑)
+BlackSmith,normal,仕方ない、俺が特別に教えてやる。
+@teachGimmick
+@end
+

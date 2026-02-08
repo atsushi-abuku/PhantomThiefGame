@@ -9,6 +9,8 @@ public enum GimmickType
     VANISH,
     FALL,
     RISE,
+    LEFT,
+    RIGHT,
 }
 
 public class GimmickFuncGenerator
@@ -45,6 +47,16 @@ public class GimmickFuncGenerator
                 return (GameObject gameObject) =>
                 {
                     gameObject.transform.position += new Vector3(0,0.01f,0);
+                };
+            case GimmickType.LEFT:
+                return (GameObject gameObject) =>
+                {
+                    gameObject.transform.position += new Vector3(-0.01f, 0, 0);
+                };
+            case GimmickType.RIGHT:
+                return (GameObject gameObject) =>
+                {
+                    gameObject.transform.position += new Vector3(0.01f, 0, 0);
                 };
             default:
                 return (GameObject gameObject) => { };

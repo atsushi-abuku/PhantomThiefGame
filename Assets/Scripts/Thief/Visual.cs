@@ -47,7 +47,7 @@ public class Visual
 
 
 
-    private void SetActiveVisual(VisualType activeType)
+    public void SetActiveVisual(VisualType activeType)
     {
         foreach (var kvp in visuals)
         {
@@ -67,7 +67,14 @@ public class Visual
         Debug.Log("Žp" + (VisualType)visual);
     }
 
+    public void TransToThief()
+    {
+        SetActiveVisual(VisualType.Thief);
+        visuals[VisualType.Thief].transform.Find("bandana_close").gameObject.SetActive(false);
+        visuals[VisualType.Thief].transform.Find("bandana_open").gameObject.SetActive(true);
+        visuals[VisualType.Thief].transform.Find("hair").GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
 
+    }
 
     public VisualType GetCurrentVisualType()
     {

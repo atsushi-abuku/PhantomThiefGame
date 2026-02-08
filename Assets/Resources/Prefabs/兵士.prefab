@@ -251,10 +251,11 @@ MonoBehaviour:
   loseDistance: 4
   attackDistance: 1
   patrolSpeed: 1
-  chaseSpeed: 1
+  chaseSpeed: 2.5
   playerHP: 5
   attackDamage: 1
   attackCooldown: 1.2
+  state: 0
 --- !u!114 &2193572036086654064
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23,10 +23,6 @@ public class Treasure : MonoBehaviour
     {
         if (collision.gameObject.tag == "Thief")
         {
-            if (fire != null)
-            {
-                fire.Activate();
-            }
                 stolenFunc();
                 Destroy(this.gameObject);
         }

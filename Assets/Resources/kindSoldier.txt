@@ -6,7 +6,7 @@ Thief,smile,やぁ @normal
 @choiceEnd
 
 @normal
-GuardMan,normal,この先にトゲの仕掛けがあるから注意してください。
+GuardMan,normal,この先にトゲの仕掛けがあるから\n注意してください。
 @teachGimmick
 @end
 
